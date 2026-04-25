@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CB ERP — Construction Business 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:#0f0f23;color:#e2e8f0;display:flex;height:100vh;overflow:hidden}
+/* SIDEBAR */
+.sb{width:220px;min-width:220px;background:#12122a;border-right:1px solid #2d2d4e;display:flex;flex-direction:column;overflow-y:auto}
+.sb-logo{padding:18px 16px 12px;border-bottom:1px solid #2d2d4e}
+.sb-logo .lg{font-size:16px;font-weight:800;color:#60a5fa;letter-spacing:.5px}
+.sb-logo .ls{font-size:10px;color:#64748b;margin-top:2px}
+.nl{font-size:9.5px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1px;padding:12px 14px 4px}
+.ni{display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer;font-size:12.5px;color:#94a3b8;border-radius:6px;margin:1px 6px;transition:.15s}
+.ni:hover{background:#1e1e3f;color:#e2e8f0}
+.ni.na{background:#1e3a5f;color:#60a5fa;font-weight:600}
+.ni-ic{font-size:14px;width:18px;text-align:center}
+.sb-ft{padding:12px 14px;margin-top:auto;border-top:1px solid #2d2d4e;font-size:11px;color:#64748b}
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:#12122a;border-bottom:1px solid #2d2d4e;padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.tb-title{font-size:15px;font-weight:700;color:#e2e8f0}
+.tb-r{display:flex;align-items:center;gap:10px}
+.content{flex:1;overflow-y:auto;background:#0f0f23}
+/* PAGE */
+.pg{display:none;padding:20px}
+.pg.on{display:block}
+/* CARDS */
+.card{background:#1a1a2e;border:1px solid #2d2d4e;border-radius:10px;padding:16px;margin-bottom:0}
+.mb{margin-bottom:16px}
+/* GRID */
+.g{display:grid;gap:14px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:1fr 1fr 1fr}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g5{grid-template-columns:repeat(5,1fr)}
+.g6{grid-template-columns:repeat(6,1fr)}
+/* KPI */
+.kpi-row{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-bottom:16px}
+.kpi{background:#1a1a2e;border:1px solid #2d2d4e;border-radius:10px;padding:14px 16px;text-align:center}
+.kv{font-size:22px;font-weight:800;color:#e2e8f0;line-height:1.2}
+.kl{font-size:10.5px;color:#64748b;margin-top:4px;font-weight:500}
+/* TABLE */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#12122a;padding:8px 10px;text-align:left;color:#93c5fd;font-weight:600;border-bottom:1px solid #3d3d6e;white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid #1e1e3f;color:#cbd5e1;vertical-align:middle}
+tr:hover td{background:#1e1e3f}
+/* PROGRESS BAR */
+.prog-bar{background:#2d2d4e;border-radius:99px;height:7px;display:inline-block;width:80px;vertical-align:middle;margin-right:5px}
+.prog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#3b82f6,#22c55e)}
+/* BUTTON */
+.btn{border:none;border-radius:6px;padding:7px 14px;font-size:12px;cursor:pointer;font-weight:600;transition:.15s}
+.bp{background:#1d4ed8;color:#fff}.bp:hover{background:#2563eb}
+.bo{background:#1e1e3f;color:#94a3b8;border:1px solid #3d3d6e}.bo:hover{background:#2d2d4e;color:#e2e8f0}
+.be{background:#7f1d1d;color:#fca5a5}.be:hover{background:#991b1b}
+/* BADGE */
+.badge{display:inline-flex;padding:2px 8px;border-radius:11px;font-size:10.5px;font-weight:700}
+.ba{background:#d1fae5;color:#065f46}.bp2{background:#dbeafe;color:#1e40af}
+/* MODAL */
+.mov{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:100}
+.modal{background:#1a1a2e;border:1px solid #3d3d6e;border-radius:12px;min-width:400px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.mh{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid #2d2d4e}
+.mt{font-size:14px;font-weight:700;color:#e2e8f0}
+.mx{background:none;border:none;color:#64748b;font-size:18px;cursor:pointer;padding:2px 6px}.mx:hover{color:#e2e8f0}
+.mb2{padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.mf{padding:12px 20px;border-top:1px solid #2d2d4e;display:flex;justify-content:flex-end;gap:8px}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fl{font-size:11px;color:#94a3b8;font-weight:600}
+.fc{background:#12122a;border:1px solid #3d3d6e;border-radius:6px;padding:7px 10px;color:#e2e8f0;font-size:12px;width:100%}
+.fc:focus{outline:none;border-color:#3b82f6}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* DETAIL PANEL */
+.dp{position:fixed;right:-380px;top:0;height:100vh;width:360px;background:#12122a;border-left:1px solid #3d3d6e;transition:.3s;z-index:90;display:flex;flex-direction:column}
+.dp.dpo{right:0}
+.dph{padding:14px 16px;border-bottom:1px solid #2d2d4e;display:flex;justify-content:space-between;align-items:center}
+.dpb{flex:1;overflow-y:auto;padding:14px 16px}
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:24px;font-size:13px;font-weight:600;transition:.3s;z-index:200;opacity:0}
+.toast.tshow{transform:translateX(-50%) translateY(0);opacity:1}
+/* STATUS BADGES */
+.is-pend{background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:11px;font-size:10.5px;font-weight:700}
+.is-coll{background:#dcfce7;color:#166534;padding:2px 7px;border-radius:11px;font-size:10.5px;font-weight:700}
+.is-over{background:#fee2e2;color:#991b1b;padding:2px 7px;border-radius:11px;font-size:10.5px;font-weight:700}
+.is-part{background:#dbeafe;color:#1e40af;padding:2px 7px;border-radius:11px;font-size:10.5px;font-weight:700}
+/* DELAY FLAG */
+.delay-flag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:11px;font-size:10.5px;font-weight:700}
+.df-red{background:#fee2e2;color:#991b1b}.df-amber{background:#fef3c7;color:#92400e}.df-green{background:#dcfce7;color:#166534}
+/* MARGIN PILL */
+.mpill{display:inline-flex;padding:2px 7px;border-radius:11px;font-size:10.5px;font-weight:700;background:#e0e7ff;color:#3730a3}
+.mp-low{background:#fee2e2;color:#991b1b}.mp-high{background:#dcfce7;color:#166534}
+/* INVENTORY STATUS */
+.inv-status-badge{display:inline-flex;padding:2px 8px;border-radius:11px;font-size:10.5px;font-weight:700}
+.inv-pending{background:#f1f5f9;color:#475569}.inv-ordered{background:#dbeafe;color:#1e40af}
+.inv-partial{background:#fef3c7;color:#92400e}.inv-received{background:#d1fae5;color:#065f46}
+.inv-installed{background:#dcfce7;color:#166534}
+/* CHART CARD HEADER */
+.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ct{font-size:13px;font-weight:700;color:#93c5fd}
+</style>
+</head>
+<body>
+
+<aside class="sb">
+  <div class="sb-logo"><div class="lg">🏗️ CB ERP</div><div class="ls">Construction Business 2026</div></div>
+  <div class="nl">ภาพรวม</div>
+  <div class="ni" onclick="nav('dashboard')"><span class="ni-ic">🏠</span>Dashboard</div>
+  <div class="ni" onclick="nav('projects')"><span class="ni-ic">📋</span>โปรเจคทั้งหมด</div>
+  <div class="ni" onclick="nav('view360')"><span class="ni-ic">🔭</span>Project 360°</div>
+  <div class="ni" onclick="nav('gantt')"><span class="ni-ic">📅</span>Gantt Chart</div>
+  <div class="ni" onclick="nav('progress')"><span class="ni-ic">📈</span>Project Progress</div>
+  <div class="nl">การเงิน</div>
+  <div class="ni" onclick="nav('budget')"><span class="ni-ic">💰</span>Budget & Forecast</div>
+  <div class="ni" onclick="nav('financial')"><span class="ni-ic">💹</span>Financial Tracking</div>
+  <div class="ni" onclick="nav('invoices')"><span class="ni-ic">🧾</span>Invoice & AR</div>
+  <div class="ni" onclick="nav('cashflow')"><span class="ni-ic">💸</span>Cash Flow</div>
+  <div class="nl">คลังวัสดุ</div>
+  <div class="ni" onclick="nav('inventory')"><span class="ni-ic">📦</span>Inventory</div>
+  <div class="nl">Log</div>
+  <div class="ni" onclick="nav('activity')"><span class="ni-ic">🔔</span>Activity Log</div>
+  <div class="sb-ft"><div style="color:#94a3b8;font-weight:600">Kanlayanee</div><div>BPD CB — Project Manager</div></div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="tb-title" id="page-title">🏗️ Construction Business (CB)</div>
+    <div class="tb-r">
+      <span style="font-size:11px;color:#64748b" id="topbar-date"></span>
+      <button class="btn bo" style="font-size:11px;padding:5px 12px" onclick="nav('activity')">🔔 Log</button>
+    </div>
+  </div>
+  <div class="content">
+
+  <!-- DASHBOARD -->
+  <div id="pg-dashboard" class="pg on">
+    <div class="kpi-row">
+      <div class="kpi" id="kpi1"></div>
+      <div class="kpi" id="kpi2"></div>
+      <div class="kpi" id="kpi3"></div>
+      <div class="kpi" id="kpi4"></div>
+    </div>
+    <div class="g g3 mb">
+      <div class="card" style="grid-column:span 2">
+        <div class="ch"><div class="ct">📊 Revenue: Forecast vs Actual รายเดือน (MB)</div></div>
+        <canvas id="revChart" height="180"></canvas>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ct">🍩 Overall Status</div></div>
+        <canvas id="statusChart" height="180"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct">🚨 Open Issues & Risks</div><button class="btn bo" style="font-size:11px;padding:4px 10px" onclick="nav('progress')">ดูทั้งหมด →</button></div>
+      <div id="dash-issues" style="padding:4px 0"></div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div id="pg-projects" class="pg">
+    <div class="card mb">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <input type="text" id="srch" class="fc" style="width:180px" placeholder="🔍 ชื่อ/Code/ลูกค้า/PM..." oninput="renderProjects()">
+        <select id="stFilter" class="fc" style="width:120px" onchange="renderProjects()">
+          <option value="all">ทุก Status</option>
+          <option value="G">🟢 Green</option><option value="Y">🟡 Yellow</option><option value="R">🔴 Red</option>
+        </select>
+        <select id="svcFilter" class="fc" style="width:150px" onchange="renderProjects()">
+          <option value="all">ทุก Service</option>
+          <option>Data Center</option><option>Solar Cell</option><option>Solar Farm</option>
+          <option>Substation</option><option>Electrical Engineering</option>
+          <option>Facility Management</option><option>EV Charger</option>
+        </select>
+        <select id="catFilter" class="fc" style="width:120px" onchange="renderProjects()">
+          <option value="all">ทุก Category</option>
+          <option>Bottom up</option><option>Stretch</option>
+        </select>
+        <select id="custFilter" class="fc" style="width:130px" onchange="renderProjects()">
+          <option value="all">ทุกลูกค้า</option>
+        </select>
+        <button class="btn bp" onclick="openProjMod(null)">➕ เพิ่มโปรเจค</button>
+        <button class="btn bo" style="font-size:11px" onclick="clearProjFilters()">✕ ล้าง</button>
+      </div>
+    </div>
+    <div class="card"><div class="tw">
+      <table>
+        <thead><tr>
+          <th>#</th><th>Code</th><th>ชื่อโปรเจค</th><th>ลูกค้า</th>
+          <th>Service Type</th><th>Category</th><th>PM</th>
+          <th style="text-align:right">PV (MB)</th><th style="text-align:right">WW2026 (MB)</th>
+          <th>Progress</th><th>Status</th><th></th>
+        </tr></thead>
+        <tbody id="proj-tbody"></tbody>
+      </table>
+    </div></div>
+  </div>
+
+  <!-- GANTT -->
+  <div id="pg-gantt" class="pg">
+    <div class="card mb">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <input type="text" id="gantt-srch" class="fc" style="width:180px" placeholder="🔍 ค้นหา..." oninput="renderGantt()">
+        <select id="gantt-svc" class="fc" style="width:150px" onchange="renderGantt()">
+          <option value="all">ทุก Service</option>
+          <option>Data Center</option><option>Solar Cell</option><option>Solar Farm</option>
+          <option>Substation</option><option>Electrical Engineering</option>
+          <option>Facility Management</option><option>EV Charger</option>
+        </select>
+        <select id="gantt-st" class="fc" style="width:120px" onchange="renderGantt()">
+          <option value="all">ทุก Status</option>
+          <option value="G">🟢 Green</option><option value="Y">🟡 Yellow</option><option value="R">🔴 Red</option>
+        </select>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct">📅 Gantt Chart — BPD CB Projects 2026</div></div>
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th>Code</th><th>โปรเจค</th>
+            <th style="min-width:400px">ม.ค. — ก.พ. — มี.ค. — เม.ย. — พ.ค. — มิ.ย. — ก.ค. — ส.ค. — ก.ย. — ต.ค. — พ.ย. — ธ.ค.</th>
+            <th>เริ่ม</th><th>สิ้นสุด</th>
+          </tr></thead>
+          <tbody id="gantt-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div id="pg-progress" class="pg">
+    <div class="kpi-row" id="prog-kpi-row"></div>
+    <div class="card mb">
+      <div class="ch">
+        <div class="ct">📊 Progress Overview & Delay Flag</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+          <input type="text" id="prog-srch" class="fc" style="width:160px" placeholder="🔍 ค้นหา..." oninput="renderProgress()">
+          <select id="prog-st" class="fc" style="width:120px" onchange="renderProgress()">
+            <option value="all">ทุก Status</option>
+            <option value="G">🟢 Green</option><option value="Y">🟡 Yellow</option><option value="R">🔴 Red</option>
+          </select>
+          <select id="prog-svc" class="fc" style="width:150px" onchange="renderProgress()">
+            <option value="all">ทุก Service</option>
+            <option>Data Center</option><option>Solar Cell</option><option>Solar Farm</option>
+            <option>Substation</option><option>Electrical Engineering</option>
+            <option>Facility Management</option><option>EV Charger</option>
+          </select>
+          <button class="btn bp" style="font-size:11px;padding:4px 10px" onclick="openMsMod(0)">+ Milestone</button>
+          <button class="btn bp" style="font-size:11px;padding:4px 10px" onclick="openIssMod(0)">+ Issue/Risk</button>
+        </div>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th>Code</th><th>โปรเจค</th><th>Progress</th>
+            <th>Milestones</th><th>Issues</th><th>Delay Flag</th>
+            <th>MoM Update (7 Apr)</th>
+          </tr></thead>
+          <tbody id="prog-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="g g2">
+      <div class="card">
+        <div class="ch"><div class="ct">🏁 Milestone Tracker</div></div>
+        <div id="ms-list"></div>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ct">⚠️ Issue & Risk Log</div></div>
+        <div id="iss-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUDGET -->
+  <div id="pg-budget" class="pg">
+    <div class="card mb">
+      <div class="ch">
+        <div class="ct">💰 Budget & Forecast Overview</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+          <input type="text" id="bud-srch" class="fc" style="width:160px" placeholder="🔍 ค้นหา..." oninput="renderBudget()">
+          <select id="bud-svc" class="fc" style="width:150px" onchange="renderBudget()">
+            <option value="all">ทุก Service</option>
+            <option>Data Center</option><option>Solar Cell</option><option>Solar Farm</option>
+            <option>Substation</option><option>Electrical Engineering</option>
+            <option>Facility Management</option><option>EV Charger</option>
+          </select>
+          <select id="bud-cat" class="fc" style="width:120px" onchange="renderBudget()">
+            <option value="all">ทุก Category</option>
+            <option>Bottom up</option><option>Stretch</option>
+          </select>
+        </div>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th>Code</th><th>ชื่อโปรเจค</th><th>ลูกค้า</th><th>Service Type</th><th>Category</th>
+            <th style="text-align:right">PV (MB)</th>
+            <th style="text-align:right">WW2026 (MB)</th>
+            <th style="text-align:right">Bottom Up</th>
+            <th style="text-align:right">Stretch</th>
+            <th style="text-align:right">%WW/PV</th>
+            <th>Focus</th>
+          </tr></thead>
+          <tbody id="budget-tbody"></tbody>
+          <tfoot id="budget-total"></tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct">📊 WW2026 แยกตาม BU</div></div>
+      <canvas id="buChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- FINANCIAL TRACKING -->
+  <div id="pg-financial" class="pg">
+    <div class="g g2 mb">
+      <div class="card">
+        <div class="ch"><div class="ct">📊 Revenue: Forecast vs Actual (MB)</div></div>
+        <canvas id="finRevChart" height="200"></canvas>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ct">📉 Actual Margin % รายเดือน</div></div>
+        <canvas id="finMgChart" height="200"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch">
+        <div class="ct">✏️ Actual Revenue & Cost รายโปรเจค</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <input type="text" id="fin-srch" class="fc" style="width:150px" placeholder="🔍 ค้นหา..." oninput="renderFinTable()">
+          <select id="finProjFilter" class="fc" style="width:160px" onchange="renderFinTable()">
+            <option value="all">ทุกโปรเจค</option>
+          </select>
+          <select id="fin-svc" class="fc" style="width:150px" onchange="renderFinTable()">
+            <option value="all">ทุก Service</option>
+            <option>Data Center</option><option>Solar Cell</option><option>Solar Farm</option>
+            <option>Substation</option><option>Electrical Engineering</option>
+            <option>Facility Management</option><option>EV Charger</option>
+          </select>
+          <button class="btn bo" style="font-size:11px" onclick="clearFinFilters()">✕ ล้าง</button>
+        </div>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th>Code</th><th>โปรเจค</th>
+            <th style="text-align:right">Forecast (MB)</th>
+            <th style="text-align:right">Act Rev (MB)</th>
+            <th style="text-align:right">Act Cost (MB)</th>
+            <th>Margin%</th><th>Est%</th><th></th>
+          </tr></thead>
+          <tbody id="fin-tbody"></tbody>
+          <tfoot id="fin-total"></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVOICE & AR -->
+  <div id="pg-invoices" class="pg">
+    <div id="inv-summary" class="kpi-row"></div>
+    <div class="card mb">
+      <div class="ch">
+        <div class="ct">🧾 Invoice & AR Tracking</div>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="inv-srch" class="fc" style="width:150px" placeholder="🔍 เลข Invoice/โปรเจค..." oninput="renderInvTable()">
+          <select id="inv-proj-sel" class="fc" style="width:140px" onchange="renderInvTable()">
+            <option value="all">ทุกโปรเจค</option>
+          </select>
+          <select id="invFilter" class="fc" style="width:130px" onchange="renderInvTable()">
+            <option value="all">ทุกสถานะ</option>
+            <option value="pending">รอเก็บ</option>
+            <option value="partial">บางส่วน</option>
+            <option value="collected">ครบแล้ว</option>
+            <option value="overdue">เกินกำหนด</option>
+          </select>
+          <button class="btn bp" onclick="openInvMod(null)">➕ เพิ่ม Invoice</button>
+          <button class="btn bo" style="font-size:11px" onclick="clearInvFilters()">✕ ล้าง</button>
+        </div>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th>เลขที่</th><th>โปรเจค</th><th>ชื่อโปรเจค</th>
+            <th style="text-align:right">Invoice (MB)</th>
+            <th style="text-align:right">เก็บแล้ว (MB)</th>
+            <th style="text-align:right">ค้าง (MB)</th>
+            <th>วันออก</th><th>ครบกำหนด</th><th>สถานะ</th><th></th>
+          </tr></thead>
+          <tbody id="inv-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="g g2">
+      <div class="card"><div class="ch"><div class="ct">🍩 Invoice Status</div></div><canvas id="arPieChart" height="200"></canvas></div>
+      <div class="card"><div class="ch"><div class="ct">📊 AR Outstanding แยกสถานะ (MB)</div></div><canvas id="arBarChart" height="200"></canvas></div>
+    </div>
+  </div>
+
+  <!-- CASH FLOW -->
+  <div id="pg-cashflow" class="pg">
+    <div class="card mb">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+        <select id="cf-svc" class="fc" style="width:150px" onchange="renderCashFlow()">
+          <option value="all">ทุก Service</option>
+          <option>Data Center</option><option>Solar Cell</option><option>Solar Farm</option>
+          <option>Substation</option><option>Electrical Engineering</option>
+          <option>Facility Management</option><option>EV Charger</option>
+        </select>
+        <select id="cf-proj" class="fc" style="width:160px" onchange="renderCashFlow()">
+          <option value="all">ทุกโปรเจค</option>
+        </select>
+        <span style="font-size:11px;color:#64748b">กรองโปรเจคเพื่อดู Cash Flow เฉพาะ</span>
+      </div>
+      <div class="ch"><div class="ct">💸 Cash Flow — Plan vs Cash In vs Cost รายเดือน (MB)</div></div>
+      <canvas id="cfBarChart" height="200"></canvas>
+    </div>
+    <div class="card mb">
+      <div class="ch"><div class="ct">📈 Cumulative Cash Flow 2026 (MB)</div></div>
+      <canvas id="cfLineChart" height="170"></canvas>
+    </div>
+    <div class="card" id="cf-table"></div>
+  </div>
+
+  <!-- INVENTORY -->
+  <div id="pg-inventory" class="pg">
+    <div class="kpi-row" id="inv-kpi-row"></div>
+    <div class="card mb">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <input type="text" id="inv-search" class="fc" style="width:200px" placeholder="🔍 ค้นหา..." oninput="renderInventory()">
+        <select id="inv-st-filter" class="fc" style="width:140px" onchange="renderInventory()">
+          <option value="all">ทุกสถานะ</option>
+          <option value="pending">รอ PO</option>
+          <option value="ordered">สั่งซื้อแล้ว</option>
+          <option value="partial">รับบางส่วน</option>
+          <option value="received">รับครบ</option>
+          <option value="installed">ติดตั้งแล้ว</option>
+        </select>
+        <select id="inv-proj-filter" class="fc" style="width:130px" onchange="renderInventory()">
+          <option value="all">ทุกโปรเจค</option>
+        </select>
+        <button class="btn bp" onclick="openInvItemMod(null)">➕ เพิ่มรายการ</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 280px;gap:16px">
+      <div class="card" style="overflow-x:auto">
+        <table style="min-width:900px">
+          <thead><tr>
+            <th>โปรเจค</th><th>หมวด</th><th>ชื่อ Material/Equipment</th>
+            <th>Brand</th><th>Model</th>
+            <th style="text-align:center">QTY</th>
+            <th style="text-align:center">รับแล้ว</th>
+            <th style="text-align:center">ติดตั้ง</th>
+            <th style="text-align:right">มูลค่า(MB)</th>
+            <th>Progress รับ/ติดตั้ง</th>
+            <th>สถานะ</th><th>ETA</th><th>จัดการ</th>
+          </tr></thead>
+          <tbody id="invitem-tbody"></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ct">📊 มูลค่าตามหมวด</div></div>
+        <canvas id="invCatChart" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVITY -->
+  <div id="pg-activity" class="pg">
+    <div class="card">
+      <div class="ch">
+        <div class="ct">🔔 Activity Log</div>
+        <div style="display:flex;gap:6px">
+          <input type="text" id="act-srch" class="fc" style="width:200px" placeholder="🔍 ค้นหา log..." oninput="renderAct()">
+          <button class="btn bo" style="font-size:11px" onclick="actLog=[];renderAct()">🗑 ล้างทั้งหมด</button>
+        </div>
+      </div>
+      <div id="act-list" style="max-height:600px;overflow-y:auto"></div>
+    </div>
+  </div>
+
+
+  <!-- PROJECT 360° VIEW -->
+  <div id="pg-view360" class="pg">
+    <!-- Project Selector Bar -->
+    <div class="card mb" style="padding:12px 16px">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <span style="font-size:12px;color:#93c5fd;font-weight:700;white-space:nowrap">🔭 เลือกโปรเจค:</span>
+        <select id="v360-sel" class="fc" style="width:320px;font-size:12px" onchange="render360()">
+          <option value="">— เลือกโปรเจค —</option>
+        </select>
+        <input type="text" id="v360-srch" class="fc" style="width:180px" placeholder="🔍 ค้นหาโปรเจค..." oninput="filter360Sel()">
+        <span style="font-size:11px;color:#64748b">หรือคลิก "360°" จากหน้า Projects</span>
+      </div>
+    </div>
+
+    <!-- Placeholder when none selected -->
+    <div id="v360-placeholder" style="text-align:center;padding:60px 0;color:#475569">
+      <div style="font-size:48px;margin-bottom:12px">🔭</div>
+      <div style="font-size:16px;font-weight:700;color:#64748b">เลือกโปรเจคเพื่อดู 360° View</div>
+      <div style="font-size:12px;margin-top:6px">ข้อมูลทุก Module ในโปรเจคเดียว</div>
+    </div>
+
+    <!-- 360° Content -->
+    <div id="v360-content" style="display:none;min-height:0">
+
+      <!-- Header Banner -->
+      <div id="v360-banner" class="card mb" style="border-left:4px solid #3b82f6;padding:14px 18px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+          <div style="flex:1;min-width:0">
+            <div id="v360-code" style="font-size:11px;color:#93c5fd;font-weight:700;margin-bottom:2px"></div>
+            <div id="v360-name" style="font-size:17px;font-weight:800;color:#e2e8f0;margin-bottom:4px;word-break:break-word"></div>
+            <div id="v360-meta" style="font-size:11px;color:#94a3b8"></div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+            <div id="v360-st-badge" style="font-size:13px;font-weight:700;padding:4px 14px;border-radius:20px;background:#1e3a5f;color:#60a5fa"></div>
+            <div id="v360-svc-badge" style="font-size:11px;padding:3px 10px;border-radius:12px;background:#1e1e3f;color:#e2e8f0"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Row -->
+      <div id="v360-kpis" class="kpi-row mb"></div>
+
+      <!-- Analysis Panel -->
+      <div id="v360-analysis" class="card mb" style="border-left:4px solid #f59e0b;padding:14px 18px"></div>
+
+      <!-- Row 1: Info + Progress (2 col) -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="card">
+          <div class="ch"><div class="ct">📋 ข้อมูลโปรเจค</div></div>
+          <div id="v360-info" style="font-size:12px"></div>
+        </div>
+        <div class="card">
+          <div class="ch"><div class="ct">📈 Progress & MoM Update</div></div>
+          <div id="v360-progress"></div>
+        </div>
+      </div>
+
+      <!-- Row 2: Financial Chart + Milestones (2 col) -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="card">
+          <div class="ch"><div class="ct">💹 Revenue & Cost รายเดือน (MB)</div></div>
+          <canvas id="v360-fin-chart" height="180"></canvas>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <div class="ct">🏁 Milestones</div>
+            <button class="btn bo" style="font-size:11px;padding:3px 8px" onclick="open360MsMod()">+ เพิ่ม</button>
+          </div>
+          <div id="v360-milestones" style="font-size:12px;max-height:220px;overflow-y:auto"></div>
+        </div>
+      </div>
+
+      <!-- Row 3: Issues + Inventory (2 col) -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="card">
+          <div class="ch">
+            <div class="ct">⚠️ Issues & Risks</div>
+            <button class="btn bo" style="font-size:11px;padding:3px 8px" onclick="open360IssMod()">+ เพิ่ม</button>
+          </div>
+          <div id="v360-issues" style="font-size:12px;max-height:220px;overflow-y:auto"></div>
+        </div>
+        <div class="card">
+          <div class="ch"><div class="ct">📦 Inventory สรุป</div></div>
+          <div id="v360-inventory" style="font-size:12px;max-height:220px;overflow-y:auto"></div>
+        </div>
+      </div>
+
+      <!-- Row 4: Financial Table + Invoices (2 col) -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="card">
+          <div class="ch"><div class="ct">💰 Financial รายเดือน</div></div>
+          <div class="tw">
+            <table>
+              <thead><tr>
+                <th>เดือน</th>
+                <th style="text-align:right">Forecast</th>
+                <th style="text-align:right">Act Rev</th>
+                <th style="text-align:right">Act Cost</th>
+                <th style="text-align:right">Margin%</th>
+              </tr></thead>
+              <tbody id="v360-fin-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch"><div class="ct">🧾 Invoice & AR</div></div>
+          <div class="tw">
+            <table>
+              <thead><tr>
+                <th>Invoice No.</th>
+                <th style="text-align:right">ยอด (MB)</th>
+                <th style="text-align:right">เก็บแล้ว</th>
+                <th>สถานะ</th>
+                <th>Due</th>
+              </tr></thead>
+              <tbody id="v360-inv-tbody"></tbody>
+            </table>
+          </div>
+          <div id="v360-inv-summary" style="font-size:11px;color:#94a3b8;margin-top:6px;padding-top:6px;border-top:1px solid #2d2d4e"></div>
+        </div>
+      </div>
+
+    </div><!-- /v360-content -->
+  </div><!-- /pg-view360 -->
+
+  </div><!-- end content -->
+</div><!-- end main -->
+
+<!-- PROJECT MODAL -->
+<div class="mov" id="proj-modal">
+  <div class="modal" style="width:520px">
+    <div class="mh"><div class="mt" id="pm-title">➕ เพิ่มโปรเจค</div><button class="mx" onclick="closeProjMod()">✕</button></div>
+    <div class="mb2">
+      <div class="fr2">
+        <div class="fg"><label class="fl">Project Code *</label><input type="text" class="fc" id="pm-code" placeholder="BPD000"></div>
+        <div class="fg"><label class="fl">ชื่อโปรเจค *</label><input type="text" class="fc" id="pm-name"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">ลูกค้า</label><input type="text" class="fc" id="pm-cust"></div>
+        <div class="fg"><label class="fl">PM</label><input type="text" class="fc" id="pm-pm"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">BU</label>
+          <select class="fc" id="pm-bu"><option>OGP</option><option>IND</option><option>POW</option></select>
+        </div>
+        <div class="fg"><label class="fl">ประเภท</label>
+          <select class="fc" id="pm-cat"><option>Lump Sum</option><option>Reimbursable</option><option>EPC</option><option>Service</option></select>
+        </div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">มูลค่าโปรเจค (MB)</label><input type="number" class="fc" id="pm-val" step="0.1"></div>
+        <div class="fg"><label class="fl">WW2026 (MB)</label><input type="number" class="fc" id="pm-ww" step="0.1"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">วันเริ่ม (YYYY-MM)</label><input type="text" class="fc" id="pm-start" placeholder="2026-01"></div>
+        <div class="fg"><label class="fl">วันสิ้นสุด (YYYY-MM)</label><input type="text" class="fc" id="pm-end" placeholder="2026-12"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">% Complete</label><input type="number" class="fc" id="pm-prog" min="0" max="100" step="1" value="0"></div>
+        <div class="fg"><label class="fl">Overall Status</label>
+          <select class="fc" id="pm-st"><option value="G">🟢 Green</option><option value="Y">🟡 Yellow</option><option value="R">🔴 Red</option></select>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">สถานะโปรเจค</label>
+        <select class="fc" id="pm-stat"><option value="active">Active</option><option value="prospect">Prospect</option><option value="closed">Closed</option></select>
+      </div>
+    </div>
+    <div class="mf"><button class="btn bo" onclick="closeProjMod()">ยกเลิก</button><button class="btn bp" onclick="saveProjMod()">💾 บันทึก</button></div>
+  </div>
+</div>
+
+<!-- MILESTONE MODAL -->
+<div class="mov" id="ms-modal">
+  <div class="modal" style="width:420px">
+    <div class="mh"><div class="mt">🏁 เพิ่ม Milestone</div><button class="mx" onclick="closeMsMod()">✕</button></div>
+    <div class="mb2">
+      <div class="fg"><label class="fl">โปรเจค</label><select class="fc" id="ms-proj-sel"></select></div>
+      <div class="fg"><label class="fl">ชื่อ Milestone *</label><input type="text" class="fc" id="ms-name-inp" placeholder="เช่น FAT Complete, Handover"></div>
+      <div class="fg"><label class="fl">กำหนดวันที่</label><input type="date" class="fc" id="ms-due-inp"></div>
+      <div class="fg"><label class="fl">หมายเหตุ</label><input type="text" class="fc" id="ms-note-inp"></div>
+      <div class="fg" style="flex-direction:row;align-items:center;gap:8px">
+        <input type="checkbox" id="ms-done-inp"><label class="fl" style="margin:0">เสร็จแล้ว</label>
+      </div>
+    </div>
+    <div class="mf"><button class="btn bo" onclick="closeMsMod()">ยกเลิก</button><button class="btn bp" onclick="saveMsMod()">💾 บันทึก</button></div>
+  </div>
+</div>
+
+<!-- ISSUE MODAL -->
+<div class="mov" id="iss-modal">
+  <div class="modal" style="width:440px">
+    <div class="mh"><div class="mt">⚠️ เพิ่ม Issue / Risk</div><button class="mx" onclick="closeIssMod()">✕</button></div>
+    <div class="mb2">
+      <div class="fg"><label class="fl">โปรเจค</label><select class="fc" id="iss-proj-sel"></select></div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">ประเภท</label>
+          <select class="fc" id="iss-type-inp"><option value="issue">Issue</option><option value="risk">Risk</option></select>
+        </div>
+        <div class="fg"><label class="fl">ความรุนแรง</label>
+          <select class="fc" id="iss-sev-inp"><option value="high">🔴 High</option><option value="medium">🟡 Medium</option><option value="low">🟢 Low</option></select>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">หัวข้อ *</label><input type="text" class="fc" id="iss-title-inp" placeholder="เช่น Equipment delivery delay"></div>
+      <div class="fg"><label class="fl">รายละเอียด</label><textarea class="fc" id="iss-desc-inp" rows="3"></textarea></div>
+    </div>
+    <div class="mf"><button class="btn bo" onclick="closeIssMod()">ยกเลิก</button><button class="btn bp" onclick="saveIssMod()">💾 บันทึก</button></div>
+  </div>
+</div>
+
+<!-- INVOICE MODAL -->
+<div class="mov" id="inv-modal">
+  <div class="modal" style="width:460px">
+    <div class="mh"><div class="mt" id="invmod-title">🧾 เพิ่ม Invoice</div><button class="mx" onclick="closeInvMod()">✕</button></div>
+    <div class="mb2">
+      <div class="fr2">
+        <div class="fg"><label class="fl">เลขที่ Invoice *</label><input type="text" class="fc" id="iv-no" placeholder="INV-2026-001"></div>
+        <div class="fg"><label class="fl">โปรเจค *</label><select class="fc" id="iv-proj"></select></div>
+      </div>
+      <div class="fg"><label class="fl">มูลค่า Invoice (MB) *</label><input type="number" class="fc" id="iv-amt" step="0.01"></div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">วันที่ออก</label><input type="date" class="fc" id="iv-date"></div>
+        <div class="fg"><label class="fl">วันครบกำหนด</label><input type="date" class="fc" id="iv-due"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">เก็บแล้ว (MB)</label><input type="number" class="fc" id="iv-paid" step="0.01" oninput="autoInvSt()"></div>
+        <div class="fg"><label class="fl">วันที่เก็บ</label><input type="date" class="fc" id="iv-pdate"></div>
+      </div>
+      <div class="fg"><label class="fl">สถานะ</label>
+        <select class="fc" id="iv-stat">
+          <option value="pending">รอเก็บเงิน</option><option value="partial">เก็บบางส่วน</option>
+          <option value="collected">เก็บครบแล้ว</option><option value="overdue">เกินกำหนด</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">หมายเหตุ</label><input type="text" class="fc" id="iv-note"></div>
+    </div>
+    <div class="mf"><button class="btn bo" onclick="closeInvMod()">ยกเลิก</button><button class="btn bp" onclick="saveInv()">💾 บันทึก</button></div>
+  </div>
+</div>
+
+<!-- INVENTORY ITEM MODAL -->
+<div class="mov" id="invitem-modal">
+  <div class="modal" style="width:560px">
+    <div class="mh"><div class="mt" id="invitem-mod-title">➕ เพิ่ม Material/Equipment</div><button class="mx" onclick="closeInvItemMod()">✕</button></div>
+    <div class="mb2">
+      <div class="fr2">
+        <div class="fg"><label class="fl">โปรเจค *</label><select class="fc" id="ii-proj"></select></div>
+        <div class="fg"><label class="fl">หมวดหมู่</label>
+          <select class="fc" id="ii-cat">
+            <option>Equipment</option><option>Instrument</option><option>Cable</option>
+            <option>Pipe</option><option>Valve</option><option>Pump</option>
+            <option>Structure</option><option>Electrical</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">ชื่อ *</label><input type="text" class="fc" id="ii-name"></div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Brand</label><input type="text" class="fc" id="ii-brand"></div>
+        <div class="fg"><label class="fl">Model/Spec</label><input type="text" class="fc" id="ii-model"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">หน่วย</label><input type="text" class="fc" id="ii-unit" placeholder="ชิ้น/เมตร/ตัน"></div>
+        <div class="fg"><label class="fl">ราคา/หน่วย (MB)</label><input type="number" class="fc" id="ii-cost" step="0.0001"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">จำนวนทั้งหมด</label><input type="number" class="fc" id="ii-qty"></div>
+        <div class="fg"><label class="fl">รับแล้ว</label><input type="number" class="fc" id="ii-qtyRec"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">ติดตั้งแล้ว</label><input type="number" class="fc" id="ii-qtyInst"></div>
+        <div class="fg"><label class="fl">สถานะ</label>
+          <select class="fc" id="ii-status">
+            <option value="pending">รอ PO</option><option value="ordered">สั่งซื้อแล้ว</option>
+            <option value="partial">รับบางส่วน</option><option value="received">รับครบ</option>
+            <option value="installed">ติดตั้งแล้ว</option>
+          </select>
+        </div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">เลข PO</label><input type="text" class="fc" id="ii-po"></div>
+        <div class="fg"><label class="fl">วันที่ PO</label><input type="date" class="fc" id="ii-podate"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">ETA (วันรับของ)</label><input type="date" class="fc" id="ii-eta"></div>
+        <div class="fg"><label class="fl">สถานที่/Warehouse</label><input type="text" class="fc" id="ii-loc"></div>
+      </div>
+      <div class="fg"><label class="fl">หมายเหตุ</label><input type="text" class="fc" id="ii-note"></div>
+    </div>
+    <div class="mf"><button class="btn bo" onclick="closeInvItemMod()">ยกเลิก</button><button class="btn bp" onclick="saveInvItem()">💾 บันทึก</button></div>
+  </div>
+</div>
+
+
+
+<!-- DETAIL PANEL -->
+<div class="dp" id="detpanel">
+  <div class="dph">
+    <div style="font-size:14px;font-weight:700" id="dp-title">รายละเอียด</div>
+    <button class="mx" onclick="closeDet()">✕</button>
+  </div>
+  <div class="dpb" id="dp-body"></div>
+</div>
+
+<div class="toast" id="toast"><span id="tmsg"></span></div>
+
+<script>
+// ===== DATA =====
+const PROJECTS = [
+  {code:'BPD001',name:'TIDC BNA3,4,5 Phase2 (190 MB.)',customer:'TIDC',pm:'Surachai Pongsumrit',svc:'Data Center',cat:'Bottom up',value:2225.0,ww2026:31.284,bottomup:31.284,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#3b82f6',progress:0,status:'active',progressText:'',issuesText:'',focus:'Focus-Data Center1'},
+  {code:'BPD003',name:'New MSC TYB (DC Expansion)',customer:'TUC',pm:'Surachai Pongsumrit',svc:'Data Center',cat:'Bottom up',value:170.0,ww2026:77.6,bottomup:77.6,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#3b82f6',progress:0,status:'active',progressText:'',issuesText:'',focus:'Focus-Data Center2'},
+  {code:'BPD041',name:'Substation for Solar Farm 80/90 MVA',customer:'Altervim',pm:'XXX',svc:'Substation',cat:'Stretch',value:400.0,ww2026:200.0,bottomup:0,stretch:200.0,overallSt:'G',color:'#22c55e',svcColor:'#8b5cf6',progress:0,status:'active',progressText:'',issuesText:'',focus:'Focus-Substation4'},
+  {code:'BPD039',name:'Tiger Power (Substation for Tiger Project)',customer:'TIDC',pm:'XXX',svc:'Substation',cat:'Stretch',value:200.0,ww2026:72.0,bottomup:0,stretch:72.0,overallSt:'G',color:'#22c55e',svcColor:'#8b5cf6',progress:0,status:'active',progressText:'',issuesText:'',focus:'Focus-Substation2'},
+  {code:'BPD002',name:'Cloud 11 (งาน 3 ปี) : 9/80 HC',customer:'Cloud 11',pm:'Kanoktup Norranarttrakul',svc:'Data Center',cat:'Bottom up',value:84.0,ww2026:30.0,bottomup:30.0,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#3b82f6',progress:0,status:'active',progressText:'',issuesText:'',focus:'-'},
+  {code:'BPD004',name:'Tiger DC Project (Manage with Infraset) 1อาคาร (1,000 MB.)',customer:'TIDC/IFS',pm:'Wiboon Balnakhon',svc:'Data Center',cat:'Bottom up',value:1000.0,ww2026:19.7,bottomup:19.7,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#3b82f6',progress:0,status:'active',progressText:'',issuesText:'',focus:'-'},
+  {code:'BPD019',name:'Underground Orange Line -WRC',customer:'WRC',pm:'กาศิก ประกายมรมาศ',svc:'Electrical Engineering',cat:'Bottom up',value:406.1,ww2026:269.0,bottomup:269.0,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#06b6d4',progress:5,status:'active',progressText:'ทำเรื่อง รับสาย WRC  เพื่อรับรู้รายได้ จากการขาย Cable ได้แล้ว 40.2 กับอีก 9 ล้านบาท',issuesText:'',focus:'Focus-EE1'},
+  {code:'BPD014',name:'MEA Underground',customer:'MEA / WRC',pm:'ณชวิช บุญโอภาส',svc:'Electrical Engineering',cat:'Bottom up',value:150.0,ww2026:150.0,bottomup:150.0,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#06b6d4',progress:95,status:'active',progressText:'สัญญาที่ปรึกษา ต้องแก้สัญญา (Addendum)  ทีม CB จะไปทำ Format  สำหรับ Revenue Booking March (Budget upto April = 45 MTHB)., จาก ตัวเลขเดิมครั้งที่แล้ว ',issuesText:'ติดตามเรื่อง ลงนามสัญญา ส่วน หนังสือ เริ่มงาน จาก MEA น่าจะเป็นวันที่ 10 Mar 26, ต้องเริ่มทำงานจริง 15 วันหลังได้รับหนังสือ',focus:'Focus-EE2'},
+  {code:'BPD017',name:'งานจัดระเบียบสายสื่อสาร MEA Phase 3',customer:'MEA',pm:'Wattana Angchuan',svc:'Electrical Engineering',cat:'Bottom up',value:65.0,ww2026:43.0,bottomup:43.0,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#06b6d4',progress:0,status:'active',progressText:'',issuesText:'',focus:'-'},
+  {code:'BPD016',name:'จัดจ้างปรับปรุงสายสื่อสารสำหรับสาธารณูปโภคฯ',customer:'MEA',pm:'Wattana Angchuan',svc:'Electrical Engineering',cat:'Bottom up',value:32.0,ww2026:21.0,bottomup:21.0,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#06b6d4',progress:0,status:'active',progressText:'',issuesText:'',focus:'-'},
+  {code:'BPD015',name:'PEA 600 KM : Total 47.14 MB',customer:'PEA',pm:'Wattana Angchuan',svc:'Electrical Engineering',cat:'Bottom up',value:47.1,ww2026:16.506,bottomup:16.506,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#06b6d4',progress:0,status:'active',progressText:'',issuesText:'',focus:'-'},
+  {code:'BPD013',name:'MA &RELOCATION SERVICE',customer:'NT',pm:'วัฒนา เอ้งฉ้วน',svc:'Facility Management',cat:'Bottom up',value:88.3,ww2026:88.26,bottomup:88.26,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#22c55e',progress:5,status:'active',progressText:'ติดตาม ความคืบหน้า ตรวจรับงาน วางบิล รับเงินงวด จาก NT,  อีสาน Nov-Dec 25, จะได้รับเงินวันที่ 17 April,  เลื่อนจากวันที่ 3 April, Jan-26 Invoiced, Feb',issuesText:'',focus:'Focus-FM2'},
+  {code:'BPD011',name:'MA-ICN 3 years (Y24-Y27)',customer:'ICN',pm:'Wiboon Balnakhon',svc:'Facility Management',cat:'Bottom up',value:38.0,ww2026:12.672,bottomup:12.672,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#22c55e',progress:0,status:'active',progressText:'',issuesText:'',focus:'-'},
+  {code:'BPD012',name:'MA Unitnet (MA 69)',customer:'FORTH,SVOA',pm:'Kasik Prakaymoramas',svc:'Facility Management',cat:'Bottom up',value:49.33,ww2026:49.332,bottomup:49.332,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#22c55e',progress:0,status:'active',progressText:'',issuesText:'',focus:'-'},
+  {code:'BPD040',name:'CPFC Project @ ฉะเชิงเทรา',customer:'Google',pm:'XXX',svc:'Substation',cat:'Stretch',value:200.0,ww2026:40.0,bottomup:0,stretch:40.0,overallSt:'G',color:'#22c55e',svcColor:'#8b5cf6',progress:0,status:'active',progressText:'',issuesText:'',focus:'Focus-Substation3'},
+  {code:'BPD010',name:'Extension Lotus Makro 30/85MW (1MW=13 MB.)',customer:'Altervim',pm:'วิบูลย์ บาลนคร',svc:'Solar Cell',cat:'Bottom up',value:1320.0,ww2026:374.0,bottomup:374.0,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#f59e0b',progress:5,status:'active',progressText:'เนื่องจาก ราคา Cost สูงขึ้น เสนอ Bidding ในวันที  24 April',issuesText:'Cost  Material + PV ปรับขึ้น ประมาณ 10% รอ Altervim ก่อนจึงให้เริ่ม Survey',focus:'Focus-Solar Cell1'},
+  {code:'BPD038',name:'Solar Farm 90 MW and Substaiton (AC)/110 MW(DC)',customer:'Altervim',pm:'Wiboon Balnakhon',svc:'Solar Farm',cat:'Stretch',value:1598.0,ww2026:366.0,bottomup:0,stretch:366.0,overallSt:'G',color:'#22c55e',svcColor:'#f97316',progress:0,status:'active',progressText:'',issuesText:'',focus:'Focus-Solar Farm1'},
+  {code:'BPD006',name:'EV WHA Carpark (Solar car park)',customer:'Altervim smart energy solution',pm:'Wiboon Balnakhon',svc:'Solar Cell',cat:'Bottom up',value:5.67,ww2026:5.7,bottomup:5.7,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#f59e0b',progress:0,status:'active',progressText:'',issuesText:'',focus:'-'},
+  {code:'BPD009',name:'Solar DTAC 5 Site : 1.35 MW',customer:'Altervim',pm:'Wiboon Balnakhon',svc:'Solar Cell',cat:'Bottom up',value:28.5,ww2026:28.5,bottomup:28.5,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#f59e0b',progress:0,status:'active',progressText:'',issuesText:'',focus:'-'},
+  {code:'BPD005',name:'Solar Lotus LPF (5 Site)',customer:'Altervim',pm:'Danupon P.',svc:'Solar Cell',cat:'Bottom up',value:76.3,ww2026:53.956,bottomup:53.956,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#f59e0b',progress:5,status:'active',progressText:'สัญญา(effective5 Mar26) ทางTUC เซ็นต์แล้ว รอส่งกลับมา W&W ทาง TUC กำลังเปิด PR ในระบบ',issuesText:'มูลค่างานมีการเปลี่ยนแปลงจาก Design, ทำ Quotation ให้ TUC อนุมัติ Variation Order (7M THB)บัญชี เปลี่ยนวิธี P/L Booking ในเดือน Jan -26, Feb-26',focus:'-'},
+  {code:'BPD007',name:'Solar Go fresh Phase3 lot2,3 (300 site)',customer:'Altervim',pm:'วิบูลย์ บาลนคร',svc:'Solar Cell',cat:'Bottom up',value:102.1,ww2026:37.481,bottomup:37.481,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#f59e0b',progress:95,status:'active',progressText:'Progress : LPF 5 sites ที่ยังไม่จ่ายไฟ 100% เหลือ Samui : Offline PV = 15,  ผรม. Comtech ยังไม่ได้เพิ่มทีม และ Krabi: Offline =1',issuesText:'',focus:'-'},
+  {code:'BPD008',name:'Makro ( 14 Site) ( 6+13 Site) (2.50 Mw)',customer:'Altervim',pm:'วิบูลย์ บาลนคร',svc:'Solar Cell',cat:'Bottom up',value:286.0,ww2026:31.0,bottomup:31.0,stretch:0,overallSt:'G',color:'#22c55e',svcColor:'#f59e0b',progress:0,status:'active',progressText:'',issuesText:'สัญญารอลงนาม (Estimated by March)',focus:'-'},
+  {code:'BPD045',name:'Solar Go Fresh Phase 4',customer:'Altervim',pm:'Wiboon Balnakhon',svc:'Solar Cell',cat:'Stretch',value:100.8,ww2026:64.4,bottomup:0,stretch:64.4,overallSt:'G',color:'#22c55e',svcColor:'#f59e0b',progress:0,status:'active',progressText:'',issuesText:'',focus:'-'},
+  {code:'BPD044',name:'Cloud 11 (Opportunity)- MA shop at Cloud 11(MEP)',customer:'Cloud 11',pm:'Kasik Prakaymoramas',svc:'Facility Management',cat:'Stretch',value:34.0,ww2026:34.0,bottomup:0,stretch:34.0,overallSt:'G',color:'#22c55e',svcColor:'#22c55e',progress:0,status:'active',progressText:'',issuesText:'',focus:'-'},
+  {code:'BPD046',name:'EV Charger',customer:'7 Eleven',pm:'xxx',svc:'EV Charger',cat:'Stretch',value:117.0,ww2026:117.0,bottomup:0,stretch:117.0,overallSt:'G',color:'#22c55e',svcColor:'#10b981',progress:0,status:'active',progressText:'',issuesText:'',focus:'Focus-EV1'},
+  {code:'BPD037',name:'Tiger DC Project  (Electrical System)',customer:'TIDC',pm:'Surachai Pongsumrit',svc:'Data Center',cat:'Stretch',value:12450.0,ww2026:130.0,bottomup:0,stretch:130.0,overallSt:'G',color:'#22c55e',svcColor:'#3b82f6',progress:0,status:'active',progressText:'',issuesText:'',focus:'Focus-Data Center4'},
+  {code:'BPD036',name:'TIDC MTG2 proj (6MW) for MEP Pakage',customer:'TIDC',pm:'Surachai Pongsumrit',svc:'Data Center',cat:'Stretch',value:2900.0,ww2026:30.0,bottomup:0,stretch:30.0,overallSt:'G',color:'#22c55e',svcColor:'#3b82f6',progress:0,status:'active',progressText:'',issuesText:'',focus:'Focus-Data Center3'}
+];
+
+const MONTH_KEYS = ['2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12'];
+const MONTH_LABELS = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+// Financial data: spread WW2026 across active months
+const finData = {};
+PROJECTS.forEach(p => {
+  const s = p.start > '2026-01' ? p.start : '2026-01';
+  const e = p.end < '2026-12' ? p.end.substring(0,7) : '2026-12';
+  const active = MONTH_KEYS.filter(m => m >= s.substring(0,7) && m <= e);
+  const perMo = active.length > 0 ? +(p.ww2026 / active.length).toFixed(3) : 0;
+  finData[p.code] = { months:{}, marginEst:20 };
+  MONTH_KEYS.forEach(m => finData[p.code].months[m] = { revForecast: active.includes(m)?perMo:0, revActual:0, costActual:0 });
+});
+
+// Seed actuals Jan–Apr
+const seeds = {
+  'BPD005':{'2026-01':[28,21],'2026-02':[31,23],'2026-03':[29,22],'2026-04':[33,25]},
+  'BPD003':{'2026-01':[12,9], '2026-02':[13,10],'2026-03':[12,9], '2026-04':[14,11]},
+  'BPD019':{'2026-01':[10,7], '2026-02':[11,8], '2026-03':[12,9], '2026-04':[10,7]},
+  'BPD013':{'2026-01':[9,7],  '2026-02':[10,8], '2026-03':[9,7],  '2026-04':[11,8]},
+  'BPD010':{'2026-01':[8,6],  '2026-02':[9,7],  '2026-03':[8,6],  '2026-04':[9,6]},
+  'BPD016':{'2026-01':[7,6],  '2026-02':[7,6],  '2026-03':[6,6],  '2026-04':[6,6]},
+  'BPD018':{'2026-01':[8,6],  '2026-02':[8,6],  '2026-03':[8,6],  '2026-04':[8,6]},
+  'BPD025':{'2026-01':[6,5],  '2026-02':[6,5],  '2026-03':[6,5],  '2026-04':[6,5]},
+};
+Object.entries(seeds).forEach(([c,ms]) => Object.entries(ms).forEach(([m,[r,co]]) => {
+  if(finData[c]) { finData[c].months[m].revActual=r; finData[c].months[m].costActual=co; }
+}));
+
+let invoices = [
+  {id:'i1',projCode:'BPD005',invNo:'INV-2026-001',amount:30,paid:30,date:'2026-01-15',due:'2026-02-15',pdate:'2026-02-10',status:'collected',note:'งวดที่ 1'},
+  {id:'i2',projCode:'BPD005',invNo:'INV-2026-002',amount:35,paid:20,date:'2026-03-01',due:'2026-04-01',pdate:'',status:'partial',note:'งวดที่ 2'},
+  {id:'i3',projCode:'BPD003',invNo:'INV-2026-003',amount:25,paid:25,date:'2026-02-01',due:'2026-03-01',pdate:'2026-02-28',status:'collected',note:''},
+  {id:'i4',projCode:'BPD013',invNo:'INV-2026-004',amount:18,paid:0,date:'2026-03-15',due:'2026-04-15',pdate:'',status:'overdue',note:'ติดตาม'},
+  {id:'i5',projCode:'BPD019',invNo:'INV-2026-005',amount:22,paid:22,date:'2026-01-20',due:'2026-02-20',pdate:'2026-02-18',status:'collected',note:''},
+  {id:'i6',projCode:'BPD010',invNo:'INV-2026-006',amount:15,paid:0,date:'2026-04-01',due:'2026-05-01',pdate:'',status:'pending',note:''},
+  {id:'i7',projCode:'BPD016',invNo:'INV-2026-007',amount:12,paid:12,date:'2026-02-15',due:'2026-03-15',pdate:'2026-03-12',status:'collected',note:''},
+  {id:'i8',projCode:'BPD018',invNo:'INV-2026-008',amount:20,paid:10,date:'2026-03-20',due:'2026-04-20',pdate:'',status:'partial',note:'รอเซ็น'},
+];
+
+let milestones = [
+  {id:'m1',projCode:'BPD005',name:'Engineering Complete',due:'2026-03-31',done:true,note:'เสร็จตามแผน'},
+  {id:'m2',projCode:'BPD005',name:'Procurement Complete',due:'2026-06-30',done:false,note:''},
+  {id:'m3',projCode:'BPD003',name:'FAT Complete',due:'2026-04-30',done:true,note:''},
+  {id:'m4',projCode:'BPD003',name:'SAT Complete',due:'2026-06-30',done:false,note:''},
+  {id:'m5',projCode:'BPD013',name:'Commissioning',due:'2026-05-31',done:false,note:'เลื่อนจากเมษา'},
+  {id:'m6',projCode:'BPD019',name:'Handover',due:'2026-07-31',done:false,note:''},
+  {id:'m7',projCode:'BPD016',name:'FAT',due:'2026-04-15',done:false,note:'ล่าช้า 2 สัปดาห์'},
+];
+
+let issues = [
+  {id:'s1',projCode:'BPD005',type:'risk',title:'Equipment delivery delay',severity:'medium',status:'open',desc:'Vendor แจ้งล่าช้า 3 สัปดาห์',date:'2026-03-15'},
+  {id:'s2',projCode:'BPD016',type:'issue',title:'Design error in P&ID',severity:'high',status:'open',desc:'พบข้อผิดพลาด P&ID ต้องแก้ไขใหม่',date:'2026-04-01'},
+  {id:'s3',projCode:'BPD013',type:'risk',title:'Subcontractor manpower shortage',severity:'medium',status:'mitigated',desc:'ประสานหาผู้รับเหมาเพิ่ม',date:'2026-03-20'},
+  {id:'s4',projCode:'BPD009',type:'issue',title:'Site access restriction',severity:'low',status:'open',desc:'รอ EIA approval',date:'2026-04-05'},
+  {id:'s5',projCode:'BPD006',type:'risk',title:'Material cost escalation',severity:'medium',status:'open',desc:'ราคาเหล็กปรับขึ้น 12%',date:'2026-03-28'},
+];
+
+let inventory = [
+  {id:'v1',projCode:'BPD005',category:'Equipment',name:'Control Panel ABB ACS880',brand:'ABB',model:'ACS880-07-0820A-7',unit:'ชุด',qty:2,qtyRec:1,qtyInst:0,unitCost:1.25,status:'partial',poNo:'PO-2026-001',poDate:'2026-01-15',eta:'2026-04-30',location:'Warehouse A',note:'รอรับที่เหลือ'},
+  {id:'v2',projCode:'BPD005',category:'Cable',name:'Power Cable 3x240mm²',brand:'NHP',model:'XLPE/SWA/PVC',unit:'เมตร',qty:5000,qtyRec:5000,qtyInst:2000,unitCost:0.00085,status:'received',poNo:'PO-2026-002',poDate:'2026-02-01',eta:'2026-03-01',location:'Warehouse A',note:''},
+  {id:'v3',projCode:'BPD003',category:'Instrument',name:'Flow Transmitter Rosemount 3051',brand:'Emerson',model:'3051SFC',unit:'ชิ้น',qty:10,qtyRec:10,qtyInst:8,unitCost:0.18,status:'received',poNo:'PO-2026-003',poDate:'2026-01-20',eta:'2026-03-20',location:'Site Store',note:''},
+  {id:'v4',projCode:'BPD013',category:'Valve',name:'Control Valve Fisher ET250D',brand:'Emerson',model:'ET250D',unit:'ชิ้น',qty:6,qtyRec:6,qtyInst:6,unitCost:0.35,status:'installed',poNo:'PO-2026-004',poDate:'2025-12-01',eta:'2026-02-15',location:'Installed',note:'ติดตั้งครบ'},
+  {id:'v5',projCode:'BPD010',category:'Pipe',name:'Carbon Steel Pipe 6" ASTM A106',brand:'Thai Steel',model:'Gr.B Sch40',unit:'เมตร',qty:800,qtyRec:800,qtyInst:650,unitCost:0.0012,status:'received',poNo:'PO-2026-005',poDate:'2026-01-10',eta:'2026-02-01',location:'Site Store',note:''},
+  {id:'v6',projCode:'BPD016',category:'Equipment',name:'PLC Siemens S7-1500',brand:'Siemens',model:'CPU 1516-3 PN/DP',unit:'ชุด',qty:3,qtyRec:0,qtyInst:0,unitCost:0.45,status:'ordered',poNo:'PO-2026-006',poDate:'2026-03-01',eta:'2026-06-20',location:'-',note:'⚠️ สั่งล่าช้า'},
+  {id:'v7',projCode:'BPD019',category:'Pump',name:'Centrifugal Pump KSB Etanorm',brand:'KSB',model:'Etanorm 80-200',unit:'ชุด',qty:4,qtyRec:4,qtyInst:4,unitCost:0.28,status:'installed',poNo:'PO-2026-007',poDate:'2025-11-15',eta:'2026-01-01',location:'Installed',note:''},
+  {id:'v8',projCode:'BPD009',category:'Structure',name:'Steel Structure H-Beam H200x200',brand:'Tata Steel',model:'H200x200',unit:'ตัน',qty:120,qtyRec:0,qtyInst:0,unitCost:0.048,status:'pending',poNo:'',poDate:'',eta:'',location:'-',note:'รอออก PO'},
+  {id:'v9',projCode:'BPD014',category:'Equipment',name:'Gas Turbine Control Panel',brand:'GE',model:'Mark VIe',unit:'ชุด',qty:1,qtyRec:0,qtyInst:0,unitCost:3.5,status:'ordered',poNo:'PO-2026-008',poDate:'2026-02-15',eta:'2026-09-30',location:'-',note:'Lead time 32 weeks'},
+  {id:'v10',projCode:'BPD007',category:'Electrical',name:'MV Switchgear 33kV',brand:'Schneider',model:'SM6 33kV',unit:'ชุด',qty:2,qtyRec:0,qtyInst:0,unitCost:1.8,status:'ordered',poNo:'PO-2026-009',poDate:'2026-03-10',eta:'2026-08-15',location:'-',note:''},
+];
+
+// ===== STATE & CHARTS =====
+let currentPage='dashboard', editProjIdx=null, editMsIdx=null, editIssIdx=null, editInvIdx=null, invEditIdx=null;
+let charts={};
+let actLog=[{ts:'2026-04-25 09:00',msg:'ระบบเริ่มต้น CB ERP 2026'}];
+
+function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
+
+// ===== NAV =====
+const PAGE_TITLES={
+  dashboard:'🏗️ Construction Business (CB)',
+  projects:'📋 โปรเจคทั้งหมด',
+  gantt:'📅 Gantt Chart',
+  progress:'📈 Project Progress',
+  budget:'💰 Budget Overview',
+  financial:'💹 Financial Tracking',
+  invoices:'🧾 Invoice / AR',
+  cashflow:'💸 Cash Flow',
+  inventory:'📦 Inventory',
+  view360:'🔭 Project 360° View',
+  activity:'📝 Activity Log',
+};
+
+function nav(page){
+  currentPage=page;
+  document.querySelectorAll('.ni').forEach(el=>el.classList.remove('na'));
+  const a=document.querySelector(`.ni[onclick="nav('${page}')"]`);
+  if(a) a.classList.add('na');
+  document.querySelectorAll('.pg').forEach(p=>{p.classList.remove('on');p.style.display='none';});
+  const pg=document.getElementById('pg-'+page);
+  if(pg){pg.classList.add('on');pg.style.display='';}
+  document.getElementById('page-title').textContent=PAGE_TITLES[page]||page;
+  renderPage(page);
+}
+
+function renderPage(page){
+  if(page==='dashboard') renderDashboard();
+  else if(page==='projects') renderProjects();
+  else if(page==='gantt') renderGantt();
+  else if(page==='progress') renderProgress();
+  else if(page==='budget') renderBudget();
+  else if(page==='financial') renderFinancialPage();
+  else if(page==='invoices') renderInvoicePage();
+  else if(page==='cashflow') renderCashFlow();
+  else if(page==='inventory') renderInventory();
+  else if(page==='view360') render360();
+  else if(page==='activity') renderAct();
+}
+
+// ===== DASHBOARD =====
+function renderDashboard(){
+  const totalVal=PROJECTS.reduce((s,p)=>s+p.value,0);
+  const totalWW=PROJECTS.reduce((s,p)=>s+p.ww2026,0);
+  const activeN=PROJECTS.filter(p=>p.status==='active').length;
+  let revActYTD=0,costYTD=0;
+  PROJECTS.forEach(p=>MONTH_KEYS.slice(0,4).forEach(m=>{revActYTD+=finData[p.code].months[m].revActual;costYTD+=finData[p.code].months[m].costActual;}));
+
+  document.getElementById('kpi1').innerHTML=`<div class="kv">${totalVal.toLocaleString()}</div><div class="kl">มูลค่าโปรเจครวม (MB)</div>`;
+  document.getElementById('kpi2').innerHTML=`<div class="kv" style="color:#3b82f6">${totalWW.toLocaleString()}</div><div class="kl">WW 2026 รวม (MB)</div>`;
+  document.getElementById('kpi3').innerHTML=`<div class="kv" style="color:#22c55e">${activeN}</div><div class="kl">โปรเจค Active</div>`;
+  document.getElementById('kpi4').innerHTML=`<div class="kv" style="color:#f97316">${revActYTD.toFixed(0)} MB</div><div class="kl">Revenue Actual YTD</div>`;
+
+  const gC=PROJECTS.filter(p=>p.overallSt==='G').length,yC=PROJECTS.filter(p=>p.overallSt==='Y').length,rC=PROJECTS.filter(p=>p.overallSt==='R').length;
+  destroyChart('statusChart');
+  const sc=document.getElementById('statusChart');
+  if(sc) charts['statusChart']=new Chart(sc,{type:'doughnut',data:{labels:['🟢 Green','🟡 Yellow','🔴 Red'],datasets:[{data:[gC,yC,rC],backgroundColor:['#22c55e','#eab308','#ef4444'],borderWidth:2,borderColor:'#1a1a2e'}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#ccc',font:{size:11}}}}}});
+
+  const mRevF=MONTH_KEYS.map(m=>+(PROJECTS.reduce((s,p)=>s+finData[p.code].months[m].revForecast,0)).toFixed(1));
+  const mRevA=MONTH_KEYS.map(m=>+(PROJECTS.reduce((s,p)=>s+finData[p.code].months[m].revActual,0)).toFixed(1));
+  destroyChart('revChart');
+  const rc=document.getElementById('revChart');
+  if(rc) charts['revChart']=new Chart(rc,{type:'bar',data:{labels:MONTH_LABELS,datasets:[{label:'Forecast',data:mRevF,backgroundColor:'rgba(59,130,246,0.4)',borderColor:'#3b82f6',borderWidth:1},{label:'Actual',data:mRevA,backgroundColor:'rgba(34,197,94,0.7)',borderColor:'#22c55e',borderWidth:1}]},options:{responsive:true,scales:{y:{ticks:{color:'#aaa'},grid:{color:'#333'}},x:{ticks:{color:'#aaa'}}},plugins:{legend:{labels:{color:'#ccc'}}}}});
+
+  const openIss=issues.filter(i=>i.status==='open').slice(0,4);
+  document.getElementById('dash-issues').innerHTML=openIss.length?openIss.map(i=>`<div style="padding:8px;border-left:3px solid ${i.severity==='high'?'#ef4444':i.severity==='medium'?'#f59e0b':'#22c55e'};margin-bottom:6px;background:#12122a;border-radius:4px"><div style="font-size:12px;font-weight:600">${i.title} <span style="font-size:10px;color:#888">[${i.projCode}]</span></div><div style="font-size:11px;color:#888">${i.desc}</div></div>`).join(''):'<div style="color:#666;font-size:12px;padding:12px">ไม่มี Issue เปิดอยู่ 🎉</div>';
+}
+
+// ===== PROJECTS =====
+function renderProjects(){
+  const q=(document.getElementById('srch')||{value:''}).value.toLowerCase();
+  const sf=(document.getElementById('stFilter')||{value:'all'}).value;
+  const svcF=(document.getElementById('svcFilter')||{value:'all'}).value;
+  const catF=(document.getElementById('catFilter')||{value:'all'}).value;
+  const custF=(document.getElementById('custFilter')||{value:'all'}).value;
+  const list=PROJECTS.filter(p=>{
+    const m=`${p.code} ${p.name} ${p.customer} ${p.pm} ${p.svc||''}`.toLowerCase().includes(q);
+    const s=sf==='all'||p.overallSt===sf;
+    const sv=svcF==='all'||p.svc===svcF;
+    const ct=catF==='all'||p.cat===catF;
+    const cu=custF==='all'||p.customer===custF;
+    return m&&s&&sv&&ct&&cu;
+  });
+  document.getElementById('proj-tbody').innerHTML=list.map(p=>{
+    const i=PROJECTS.indexOf(p);
+    const df=p.overallSt==='R'?'df-red':p.overallSt==='Y'?'df-amber':'df-green';
+    const svcDot=`<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${p.svcColor||'#94a3b8'};margin-right:4px"></span>`;
+    return `<tr onclick="openDet('proj',${i})" style="cursor:pointer">
+      <td>${i+1}</td>
+      <td><span class="delay-flag ${df}">${p.overallSt==='R'?'🔴':p.overallSt==='Y'?'🟡':'🟢'} ${p.code}</span></td>
+      <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</td>
+      <td>${p.customer}</td>
+      <td style="font-size:11px">${svcDot}${p.svc||'-'}</td>
+      <td style="font-size:11px">${p.cat||'-'}</td>
+      <td>${p.pm}</td>
+      <td style="text-align:right">${p.value.toLocaleString()}</td>
+      <td style="text-align:right">${p.ww2026.toLocaleString()}</td>
+      <td><div class="prog-bar"><div class="prog-fill" style="width:${p.progress}%"></div></div>${p.progress}%</td>
+      <td><span class="delay-flag ${df}" style="font-size:10px">${p.overallSt==='R'?'🔴 R':p.overallSt==='Y'?'🟡 Y':'🟢 G'}</span></td>
+      <td style="white-space:nowrap">
+        <button class="btn bo" style="padding:3px 8px;font-size:11px" onclick="event.stopPropagation();openProjMod(${i})">✏️</button>
+        <button class="btn bp" style="padding:3px 8px;font-size:11px;margin-left:4px" onclick="event.stopPropagation();goto360('${p.code}')">🔭</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ===== GANTT =====
+function renderGantt(){
+  const q=(document.getElementById('gantt-srch')||{value:''}).value.toLowerCase();
+  const sv=(document.getElementById('gantt-svc')||{value:'all'}).value;
+  const st=(document.getElementById('gantt-st')||{value:'all'}).value;
+  const list=PROJECTS.filter(p=>{
+    const m=`${p.code} ${p.name} ${p.customer}`.toLowerCase().includes(q);
+    return m&&(sv==='all'||p.svc===sv)&&(st==='all'||p.overallSt===st);
+  });
+  document.getElementById('gantt-tbody').innerHTML=list.map(p=>{
+    const s=new Date(p.start+'-01'),e=new Date(p.end+'-28');
+    const sM=Math.max(0,(s.getFullYear()-2026)*12+s.getMonth());
+    const eM=Math.min(11,(e.getFullYear()-2026)*12+e.getMonth());
+    const bL=(sM/12*100).toFixed(1),bW=Math.max(((eM-sM+1)/12*100),2).toFixed(1);
+    const todPct=(new Date().getMonth()/12*100).toFixed(1);
+    return `<tr>
+      <td style="font-size:11px;white-space:nowrap">${p.code}</td>
+      <td style="font-size:11px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</td>
+      <td style="min-width:400px">
+        <div style="position:relative;height:16px;background:#1a1a2e;border-radius:4px">
+          <div style="position:absolute;left:${bL}%;width:${bW}%;height:100%;background:${p.color};border-radius:4px;opacity:.8"></div>
+          <div style="position:absolute;left:${todPct}%;width:2px;height:100%;background:#f97316;z-index:2"></div>
+        </div>
+      </td>
+      <td style="font-size:11px;color:#aaa">${p.start}</td><td style="font-size:11px;color:#aaa">${p.end}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ===== PROGRESS =====
+function renderProgress(){
+  const gC=PROJECTS.filter(p=>p.overallSt==='G').length,yC=PROJECTS.filter(p=>p.overallSt==='Y').length,rC=PROJECTS.filter(p=>p.overallSt==='R').length;
+  const avgP=(PROJECTS.reduce((s,p)=>s+p.progress,0)/PROJECTS.length).toFixed(1);
+  const openN=issues.filter(i=>i.status==='open').length;
+  document.getElementById('prog-kpi-row').innerHTML=`
+    <div class="kpi"><div class="kv">${avgP}%</div><div class="kl">เฉลี่ย % Complete</div></div>
+    <div class="kpi"><div class="kv" style="color:#22c55e">${gC}</div><div class="kl">🟢 On Track</div></div>
+    <div class="kpi"><div class="kv" style="color:#eab308">${yC}</div><div class="kl">🟡 At Risk</div></div>
+    <div class="kpi"><div class="kv" style="color:#ef4444">${rC}</div><div class="kl">🔴 Delayed</div></div>
+    <div class="kpi"><div class="kv" style="color:#f97316">${openN}</div><div class="kl">Open Issues</div></div>`;
+
+  const progQ=(document.getElementById('prog-srch')||{value:''}).value.toLowerCase();
+  const progSt=(document.getElementById('prog-st')||{value:'all'}).value;
+  const progSvc=(document.getElementById('prog-svc')||{value:'all'}).value;
+  const progList=PROJECTS.filter(p=>{
+    const m=`${p.code} ${p.name} ${p.customer}`.toLowerCase().includes(progQ);
+    return m&&(progSt==='all'||p.overallSt===progSt)&&(progSvc==='all'||p.svc===progSvc);
+  });
+  document.getElementById('prog-tbody').innerHTML=progList.map((p,i)=>{
+    const origI=PROJECTS.indexOf(p);
+    const pms=milestones.filter(m=>m.projCode===p.code);
+    const pis=issues.filter(s=>s.projCode===p.code&&s.status==='open');
+    const df=p.overallSt==='R'?'df-red':p.overallSt==='Y'?'df-amber':'df-green';
+    const fl=p.overallSt==='R'?'🔴 ล่าช้า':p.overallSt==='Y'?'🟡 เสี่ยง':'🟢 ปกติ';
+    const hasMoM = p.progressText && p.progressText.length > 0;
+    return `<tr>
+      <td style="font-size:11px;white-space:nowrap">${p.code}</td>
+      <td style="font-size:11px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</td>
+      <td style="min-width:120px"><div class="prog-bar"><div class="prog-fill" style="width:${p.progress}%"></div></div>${p.progress}%</td>
+      <td>${pms.filter(m=>m.done).length}/${pms.length} <button class="btn bo" style="padding:1px 6px;font-size:10px" onclick="openMsMod(${origI})">+</button></td>
+      <td>${pis.length} <button class="btn bo" style="padding:1px 6px;font-size:10px" onclick="openIssMod(${origI})">+</button></td>
+      <td><span class="delay-flag ${df}">${fl}</span></td>
+      <td style="font-size:10px;color:#94a3b8;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${hasMoM?'📋 '+p.progressText.substring(0,80)+'...':''}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('ms-list').innerHTML=milestones.length?milestones.map((m,i)=>{
+    const od=!m.done&&m.due<'2026-04-25';
+    return `<div style="display:flex;align-items:center;gap:8px;padding:7px;border-bottom:1px solid #2d2d4e">
+      <input type="checkbox" ${m.done?'checked':''} onchange="toggleMs(${i},this.checked)">
+      <div style="flex:1">
+        <div style="font-size:12px;color:${m.done?'#64748b':od?'#ef4444':'#e2e8f0'};font-weight:600">${m.name} <span style="font-size:10px;color:#888">[${m.projCode}]</span></div>
+        <div style="font-size:11px;color:#888">Due: ${m.due}${m.note?' — '+m.note:''}</div>
+      </div>
+      <span style="font-size:10px;padding:2px 7px;border-radius:11px;background:${m.done?'#166534':'#1e3a5f'};color:${m.done?'#4ade80':'#93c5fd'}">${m.done?'Done':'Pending'}</span>
+      <button class="btn bo" style="padding:2px 6px;font-size:10px" onclick="delMs(${i})">🗑</button>
+    </div>`;
+  }).join(''):'<div style="color:#666;padding:16px;font-size:12px">ยังไม่มี Milestone</div>';
+
+  document.getElementById('iss-list').innerHTML=issues.length?issues.map((s,i)=>{
+    const sc=s.severity==='high'?'#ef4444':s.severity==='medium'?'#f59e0b':'#22c55e';
+    const stc=s.status==='open'?'#ef4444':s.status==='mitigated'?'#f59e0b':'#22c55e';
+    return `<div style="padding:9px;border-left:3px solid ${sc};background:#12122a;border-radius:4px;margin-bottom:6px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><span style="font-size:10px;background:${sc}22;color:${sc};padding:2px 6px;border-radius:10px">${s.severity.toUpperCase()}</span> <span style="font-size:10px;color:#888">${s.type} · ${s.projCode}</span></div>
+        <div style="display:flex;gap:4px">
+          <span style="font-size:10px;background:${stc}22;color:${stc};padding:2px 7px;border-radius:10px">${s.status}</span>
+          <button class="btn bo" style="padding:1px 6px;font-size:10px" onclick="closeIss(${i})">✓</button>
+          <button class="btn bo" style="padding:1px 6px;font-size:10px" onclick="delIss(${i})">🗑</button>
+        </div>
+      </div>
+      <div style="font-size:12px;font-weight:600;color:#e2e8f0;margin-top:4px">${s.title}</div>
+      <div style="font-size:11px;color:#888">${s.desc}</div>
+    </div>`;
+  }).join(''):'<div style="color:#666;padding:16px;font-size:12px">ไม่มี Issue/Risk</div>';
+}
+
+function toggleMs(i,v){milestones[i].done=v;renderProgress();logAct(`Milestone "${milestones[i].name}" ${v?'done':'reopened'}`);}
+function delMs(i){milestones.splice(i,1);renderProgress();}
+function closeIss(i){issues[i].status='closed';renderProgress();logAct(`ปิด issue: ${issues[i].title}`);}
+function delIss(i){issues.splice(i,1);renderProgress();}
+
+// ===== BUDGET =====
+function renderBudget(){
+  const budQ=(document.getElementById('bud-srch')||{value:''}).value.toLowerCase();
+  const budSvc=(document.getElementById('bud-svc')||{value:'all'}).value;
+  const budCat=(document.getElementById('bud-cat')||{value:'all'}).value;
+  const budList=PROJECTS.filter(p=>{
+    const m=`${p.code} ${p.name} ${p.customer} ${p.pm||''}`.toLowerCase().includes(budQ);
+    return m&&(budSvc==='all'||p.svc===budSvc)&&(budCat==='all'||p.cat===budCat);
+  });
+  const totalWW=budList.reduce((s,p)=>s+p.ww2026,0);
+  const totalBU=budList.reduce((s,p)=>s+(p.bottomup||0),0);
+  const totalST=budList.reduce((s,p)=>s+(p.stretch||0),0);
+  document.getElementById('budget-tbody').innerHTML=budList.map(p=>`<tr>
+    <td style="font-size:11px">${p.code}</td>
+    <td style="font-size:11px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</td>
+    <td style="font-size:11px">${p.customer}</td>
+    <td style="font-size:11px"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${p.svcColor||'#94a3b8'};margin-right:4px"></span>${p.svc||'-'}</td>
+    <td><span style="font-size:10px;padding:2px 7px;border-radius:11px;background:${p.cat==='Bottom up'?'#dbeafe':'#fef3c7'};color:${p.cat==='Bottom up'?'#1e40af':'#92400e'};font-weight:700">${p.cat||'-'}</span></td>
+    <td style="text-align:right">${p.value.toLocaleString()}</td>
+    <td style="text-align:right;color:#4ade80;font-weight:600">${p.ww2026.toLocaleString()}</td>
+    <td style="text-align:right;color:#93c5fd">${p.bottomup>0?p.bottomup.toFixed(1):'-'}</td>
+    <td style="text-align:right;color:#f59e0b">${p.stretch>0?p.stretch.toFixed(1):'-'}</td>
+    <td style="text-align:right;color:#aaa">${p.value>0?((p.ww2026/p.value)*100).toFixed(1)+'%':'-'}</td>
+    <td style="font-size:11px;color:#64748b">${p.focus&&p.focus!=='-'?p.focus:'-'}</td>
+  </tr>`).join('');
+  const tv=budList.reduce((s,p)=>s+p.value,0),tw=budList.reduce((s,p)=>s+p.ww2026,0);
+  document.getElementById('budget-total').innerHTML=`<tr style="font-weight:700;background:#12122a;color:#e2e8f0">
+    <td colspan="5">รวมทั้งหมด (${PROJECTS.length} โปรเจค)</td>
+    <td style="text-align:right">${tv.toLocaleString()}</td>
+    <td style="text-align:right;color:#4ade80">${tw.toFixed(1)}</td>
+    <td style="text-align:right;color:#93c5fd">${totalBU.toFixed(1)}</td>
+    <td style="text-align:right;color:#f59e0b">${totalST.toFixed(1)}</td>
+    <td style="text-align:right">${((tw/tv)*100).toFixed(1)}%</td>
+    <td></td></tr>`;
+  // Chart by service type
+  const svcs={};
+  budList.forEach(p=>{if(!svcs[p.svc])svcs[p.svc]={v:0,w:0,col:p.svcColor||'#94a3b8'};svcs[p.svc].v+=p.value;svcs[p.svc].w+=p.ww2026;});
+  destroyChart('buChart');
+  const bc=document.getElementById('buChart');
+  if(bc) charts['buChart']=new Chart(bc,{type:'bar',data:{labels:Object.keys(svcs),datasets:[{label:'WW2026 (MB)',data:Object.values(svcs).map(b=>+b.w.toFixed(1)),backgroundColor:Object.values(svcs).map(b=>b.col+'99'),borderColor:Object.values(svcs).map(b=>b.col),borderWidth:1}]},options:{responsive:true,indexAxis:'y',scales:{x:{ticks:{color:'#aaa'},grid:{color:'#333'}},y:{ticks:{color:'#ccc',font:{size:11}}}},plugins:{legend:{display:false}}}});
+}
+
+// ===== FINANCIAL =====
+function renderFinancialPage(){renderFinTable();renderFinSummary();}
+
+function renderFinTable(){
+  const filt=(document.getElementById('finProjFilter')||{value:'all'}).value;
+  const finQ=(document.getElementById('fin-srch')||{value:''}).value.toLowerCase();
+  const finSvc=(document.getElementById('fin-svc')||{value:'all'}).value;
+  const projs=PROJECTS.filter(p=>{
+    const matchCode=filt==='all'||p.code===filt;
+    const matchQ=`${p.code} ${p.name} ${p.customer}`.toLowerCase().includes(finQ);
+    const matchSvc=finSvc==='all'||p.svc===finSvc;
+    return matchCode&&matchQ&&matchSvc;
+  });
+  document.getElementById('fin-tbody').innerHTML=projs.map(p=>{
+    const fd=finData[p.code];
+    let tf=0,tr=0,tc=0;
+    MONTH_KEYS.forEach(m=>{tf+=fd.months[m].revForecast;tr+=fd.months[m].revActual;tc+=fd.months[m].costActual;});
+    const mg=tr>0?((tr-tc)/tr*100).toFixed(1):'-';
+    const mc=mg!=='-'&&+mg<fd.marginEst-5?'mp-low':mg!=='-'&&+mg>fd.marginEst+5?'mp-high':'';
+    return `<tr>
+      <td style="font-size:11px">${p.code}</td>
+      <td style="font-size:11px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</td>
+      <td style="text-align:right">${tf.toFixed(1)}</td>
+      <td style="text-align:right;color:#4ade80">${tr.toFixed(1)}</td>
+      <td style="text-align:right;color:#fb923c">${tc.toFixed(1)}</td>
+      <td><span class="mpill ${mc}">${mg}%</span></td>
+      <td style="text-align:right;color:#94a3b8">${fd.marginEst}%</td>
+      <td><button class="btn bo" style="padding:2px 8px;font-size:10px" onclick="openFinDetail('${p.code}')">รายเดือน</button></td>
+    </tr>`;
+  }).join('');
+  let gf=0,gr=0,gc=0;
+  PROJECTS.forEach(p=>MONTH_KEYS.forEach(m=>{gf+=finData[p.code].months[m].revForecast;gr+=finData[p.code].months[m].revActual;gc+=finData[p.code].months[m].costActual;}));
+  const gm=gr>0?((gr-gc)/gr*100).toFixed(1):'-';
+  document.getElementById('fin-total').innerHTML=`<tr style="font-weight:700;background:#12122a"><td colspan="2">รวม</td><td style="text-align:right">${gf.toFixed(1)}</td><td style="text-align:right;color:#4ade80">${gr.toFixed(1)}</td><td style="text-align:right;color:#fb923c">${gc.toFixed(1)}</td><td colspan="3"><span class="mpill">${gm}%</span></td></tr>`;
+}
+
+function renderFinSummary(){
+  const mF=MONTH_KEYS.map(m=>+(PROJECTS.reduce((s,p)=>s+finData[p.code].months[m].revForecast,0)).toFixed(1));
+  const mA=MONTH_KEYS.map(m=>+(PROJECTS.reduce((s,p)=>s+finData[p.code].months[m].revActual,0)).toFixed(1));
+  const mC=MONTH_KEYS.map(m=>+(PROJECTS.reduce((s,p)=>s+finData[p.code].months[m].costActual,0)).toFixed(1));
+  const mMg=MONTH_KEYS.map((_,i)=>mA[i]>0?+((mA[i]-mC[i])/mA[i]*100).toFixed(1):null);
+  destroyChart('finRevChart');
+  const fc=document.getElementById('finRevChart');
+  if(fc) charts['finRevChart']=new Chart(fc,{type:'bar',data:{labels:MONTH_LABELS,datasets:[{label:'Forecast',data:mF,backgroundColor:'rgba(59,130,246,.4)',borderColor:'#3b82f6',borderWidth:1},{label:'Actual Rev',data:mA,backgroundColor:'rgba(34,197,94,.6)',borderColor:'#22c55e',borderWidth:1},{label:'Actual Cost',data:mC,backgroundColor:'rgba(239,68,68,.4)',borderColor:'#ef4444',borderWidth:1}]},options:{responsive:true,scales:{y:{ticks:{color:'#aaa'},grid:{color:'#333'}},x:{ticks:{color:'#aaa'}}},plugins:{legend:{labels:{color:'#ccc'}}}}});
+  destroyChart('finMgChart');
+  const mg=document.getElementById('finMgChart');
+  if(mg) charts['finMgChart']=new Chart(mg,{type:'line',data:{labels:MONTH_LABELS,datasets:[{label:'Margin%',data:mMg,borderColor:'#a78bfa',backgroundColor:'rgba(167,139,250,.1)',fill:true,tension:.3,pointBackgroundColor:'#a78bfa'}]},options:{responsive:true,scales:{y:{ticks:{color:'#aaa'},grid:{color:'#333'},min:0,max:40},x:{ticks:{color:'#aaa'}}},plugins:{legend:{labels:{color:'#ccc'}}}}});
+}
+
+function openFinDetail(code){
+  const p=PROJECTS.find(px=>px.code===code),fd=finData[code];
+  document.getElementById('dp-title').textContent=`💹 ${code}: ${p.name}`;
+  let h=`<div style="font-size:11px;color:#888;margin-bottom:10px">คลิก Actual Rev/Cost เพื่อแก้ไข</div>
+    <table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#12122a">
+    <th style="padding:5px 4px">เดือน</th><th style="text-align:right">Forecast</th><th style="text-align:right">Act Rev</th><th style="text-align:right">Act Cost</th><th style="text-align:right">Margin</th><th style="text-align:right">Margin%</th>
+    </tr></thead><tbody>`;
+  MONTH_KEYS.forEach((m,i)=>{
+    const mo=fd.months[m];const mg=mo.revActual-mo.costActual;const mp=mo.revActual>0?(mg/mo.revActual*100).toFixed(1):'-';
+    h+=`<tr style="border-bottom:1px solid #2d2d4e"><td style="padding:5px 4px">${MONTH_LABELS[i]}</td>
+      <td style="text-align:right;color:#93c5fd">${mo.revForecast.toFixed(1)}</td>
+      <td style="text-align:right"><input type="number" step="0.1" value="${mo.revActual}" style="width:58px;background:#12122a;border:1px solid #3d3d6e;color:#4ade80;text-align:right;border-radius:4px;padding:2px" onchange="saveFinMonth('${code}','${m}','rev',this.value)"></td>
+      <td style="text-align:right"><input type="number" step="0.1" value="${mo.costActual}" style="width:58px;background:#12122a;border:1px solid #3d3d6e;color:#fb923c;text-align:right;border-radius:4px;padding:2px" onchange="saveFinMonth('${code}','${m}','cost',this.value)"></td>
+      <td style="text-align:right;color:${mg>=0?'#4ade80':'#ef4444'}">${mg.toFixed(1)}</td>
+      <td style="text-align:right">${mp!=='-'?`<span class="mpill">${mp}%</span>`:'-'}</td></tr>`;
+  });
+  document.getElementById('dp-body').innerHTML=h+'</tbody></table>';
+  document.getElementById('detpanel').classList.add('dpo');
+}
+
+function saveFinMonth(code,mo,field,val){
+  if(field==='rev') finData[code].months[mo].revActual=+val;
+  else finData[code].months[mo].costActual=+val;
+  renderFinSummary();
+  logAct(`อัพเดต ${field==='rev'?'Revenue':'Cost'} Actual [${code}] ${mo}: ${val} MB`);
+}
+
+// ===== INVOICES =====
+function renderInvoicePage(){renderInvTable();renderARCharts();}
+
+function renderInvTable(){
+  const filt=(document.getElementById('invFilter')||{value:'all'}).value;
+  const invQ=(document.getElementById('inv-srch')||{value:''}).value.toLowerCase();
+  const invPrj=(document.getElementById('inv-proj-sel')||{value:'all'}).value;
+  const list=invoices.filter(i=>{
+    const matchSt=filt==='all'||i.status===filt;
+    const matchQ=`${i.invNo} ${i.projCode} ${i.note||''}`.toLowerCase().includes(invQ);
+    const matchPrj=invPrj==='all'||i.projCode===invPrj;
+    return matchSt&&matchQ&&matchPrj;
+  });
+  document.getElementById('inv-tbody').innerHTML=list.map(inv=>{
+    const ri=invoices.indexOf(inv);
+    const p=PROJECTS.find(px=>px.code===inv.projCode);
+    const stM={collected:{cls:'is-coll',l:'เก็บครบ'},overdue:{cls:'is-over',l:'เกินกำหนด'},partial:{cls:'is-part',l:'บางส่วน'},pending:{cls:'is-pend',l:'รอเก็บ'}};
+    const st=stM[inv.status]||{cls:'',l:inv.status};
+    return `<tr>
+      <td style="font-size:12px">${inv.invNo}</td><td style="font-size:11px">${inv.projCode}</td>
+      <td style="font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p?p.name:'-'}</td>
+      <td style="text-align:right">${inv.amount.toFixed(2)}</td>
+      <td style="text-align:right;color:#4ade80">${inv.paid.toFixed(2)}</td>
+      <td style="text-align:right;color:#fb923c">${(inv.amount-inv.paid).toFixed(2)}</td>
+      <td style="font-size:11px">${inv.date||'-'}</td>
+      <td style="font-size:11px;color:${inv.status==='overdue'?'#ef4444':'#aaa'}">${inv.due||'-'}</td>
+      <td><span class="inv-status-badge ${st.cls}">${st.l}</span></td>
+      <td>
+        <button class="btn bo" style="padding:2px 6px;font-size:10px" onclick="openInvMod(${ri})">✏️</button>
+        <button class="btn bo" style="padding:2px 6px;font-size:10px" onclick="delInv(${ri})">🗑</button>
+      </td>
+    </tr>`;
+  }).join('');
+  const tI=invoices.reduce((s,i)=>s+i.amount,0),tC=invoices.reduce((s,i)=>s+i.paid,0),tAR=tI-tC;
+  const ov=invoices.filter(i=>i.status==='overdue').reduce((s,i)=>s+(i.amount-i.paid),0);
+  document.getElementById('inv-summary').innerHTML=`
+    <div class="kpi"><div class="kv">${tI.toFixed(1)}</div><div class="kl">Invoice รวม (MB)</div></div>
+    <div class="kpi"><div class="kv" style="color:#4ade80">${tC.toFixed(1)}</div><div class="kl">เก็บแล้ว (MB)</div></div>
+    <div class="kpi"><div class="kv" style="color:#fb923c">${tAR.toFixed(1)}</div><div class="kl">AR คงค้าง (MB)</div></div>
+    <div class="kpi"><div class="kv" style="color:#ef4444">${ov.toFixed(1)}</div><div class="kl">เกินกำหนด (MB)</div></div>`;
+}
+
+function renderARCharts(){
+  const c={pending:0,partial:0,collected:0,overdue:0},a={pending:0,partial:0,collected:0,overdue:0};
+  invoices.forEach(i=>{c[i.status]++;a[i.status]+=(i.amount-i.paid);});
+  destroyChart('arPieChart');
+  const ap=document.getElementById('arPieChart');
+  if(ap) charts['arPieChart']=new Chart(ap,{type:'doughnut',data:{labels:['รอเก็บ','บางส่วน','เก็บครบ','เกินกำหนด'],datasets:[{data:[c.pending,c.partial,c.collected,c.overdue],backgroundColor:['#3b82f6','#eab308','#22c55e','#ef4444'],borderWidth:2,borderColor:'#1a1a2e'}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#ccc',font:{size:11}}}}}});
+  destroyChart('arBarChart');
+  const ab=document.getElementById('arBarChart');
+  if(ab) charts['arBarChart']=new Chart(ab,{type:'bar',data:{labels:['รอเก็บ','บางส่วน','เก็บครบ','เกินกำหนด'],datasets:[{label:'AR (MB)',data:[a.pending,a.partial,a.collected,a.overdue],backgroundColor:['#3b82f680','#eab30880','#22c55e80','#ef444480'],borderColor:['#3b82f6','#eab308','#22c55e','#ef4444'],borderWidth:1}]},options:{responsive:true,scales:{y:{ticks:{color:'#aaa'},grid:{color:'#333'}},x:{ticks:{color:'#aaa'}}},plugins:{legend:{labels:{color:'#ccc'}}}}});
+}
+
+function delInv(i){invoices.splice(i,1);renderInvoicePage();}
+function autoInvSt(){
+  const amt=+document.getElementById('iv-amt').value||0;
+  const paid=+document.getElementById('iv-paid').value||0;
+  const due=document.getElementById('iv-due').value;
+  let st='pending';
+  if(paid>=amt&&amt>0) st='collected';
+  else if(paid>0&&paid<amt) st='partial';
+  else if(due&&due<'2026-04-25') st='overdue';
+  document.getElementById('iv-stat').value=st;
+}
+
+// ===== CASH FLOW =====
+function renderCashFlow(){
+  const cfSvc=(document.getElementById('cf-svc')||{value:'all'}).value;
+  const cfProj=(document.getElementById('cf-proj')||{value:'all'}).value;
+  const cfList=PROJECTS.filter(p=>(cfSvc==='all'||p.svc===cfSvc)&&(cfProj==='all'||p.code===cfProj));
+  const mF=MONTH_KEYS.map(m=>+(cfList.reduce((s,p)=>s+finData[p.code].months[m].revForecast,0)).toFixed(1));
+  const mA=MONTH_KEYS.map(m=>+(cfList.reduce((s,p)=>s+finData[p.code].months[m].revActual,0)).toFixed(1));
+  const mC=MONTH_KEYS.map(m=>+(cfList.reduce((s,p)=>s+finData[p.code].months[m].costActual,0)).toFixed(1));
+  const cfCodes=new Set(cfList.map(p=>p.code));
+  const mCash=MONTH_KEYS.map(m=>invoices.filter(i=>i.pdate&&i.pdate.substring(0,7)===m&&(cfProj==='all'||cfCodes.has(i.projCode))).reduce((s,i)=>s+i.paid,0));
+  let cp=0,ca=0;
+  const cumP=mF.map(v=>{cp+=v;return +cp.toFixed(1);});
+  const cumA=mCash.map(v=>{ca+=v;return +ca.toFixed(1);});
+  destroyChart('cfBarChart');
+  const cb=document.getElementById('cfBarChart');
+  if(cb) charts['cfBarChart']=new Chart(cb,{type:'bar',data:{labels:MONTH_LABELS,datasets:[{label:'Rev Plan',data:mF,backgroundColor:'rgba(59,130,246,.4)',borderColor:'#3b82f6',borderWidth:1},{label:'Cash In',data:mCash,backgroundColor:'rgba(34,197,94,.7)',borderColor:'#22c55e',borderWidth:1},{label:'Cost',data:mC,backgroundColor:'rgba(239,68,68,.4)',borderColor:'#ef4444',borderWidth:1}]},options:{responsive:true,scales:{y:{ticks:{color:'#aaa'},grid:{color:'#333'}},x:{ticks:{color:'#aaa'}}},plugins:{legend:{labels:{color:'#ccc'}}}}});
+  destroyChart('cfLineChart');
+  const cl=document.getElementById('cfLineChart');
+  if(cl) charts['cfLineChart']=new Chart(cl,{type:'line',data:{labels:MONTH_LABELS,datasets:[{label:'Cumulative Plan',data:cumP,borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,.1)',fill:true,tension:.3},{label:'Cumulative Cash In',data:cumA,borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,.1)',fill:true,tension:.3}]},options:{responsive:true,scales:{y:{ticks:{color:'#aaa'},grid:{color:'#333'}},x:{ticks:{color:'#aaa'}}},plugins:{legend:{labels:{color:'#ccc'}}}}});
+  document.getElementById('cf-table').innerHTML=`<div class="ch"><div class="ct">📋 Cash Flow รายเดือน</div></div><div class="tw"><table>
+    <thead><tr><th>เดือน</th><th style="text-align:right">Plan(MB)</th><th style="text-align:right">Cash In(MB)</th><th style="text-align:right">Cost(MB)</th><th style="text-align:right">Net</th><th style="text-align:right">Cum Plan</th><th style="text-align:right">Cum Cash</th></tr></thead>
+    <tbody>${MONTH_KEYS.map((_,i)=>{const n=mCash[i]-mC[i];return`<tr style="border-bottom:1px solid #2d2d4e"><td style="padding:6px 8px">${MONTH_LABELS[i]}</td><td style="text-align:right;color:#93c5fd">${mF[i].toFixed(1)}</td><td style="text-align:right;color:#4ade80">${mCash[i].toFixed(1)}</td><td style="text-align:right;color:#fb923c">${mC[i].toFixed(1)}</td><td style="text-align:right;color:${n>=0?'#4ade80':'#ef4444'}">${n.toFixed(1)}</td><td style="text-align:right;color:#93c5fd">${cumP[i].toFixed(1)}</td><td style="text-align:right;color:#4ade80">${cumA[i].toFixed(1)}</td></tr>`;}).join('')}</tbody></table></div>`;
+}
+
+// ===== INVENTORY =====
+function renderInventory(){
+  const q=(document.getElementById('inv-search')||{value:''}).value.toLowerCase();
+  const sf=(document.getElementById('inv-st-filter')||{value:'all'}).value;
+  const pf=(document.getElementById('inv-proj-filter')||{value:'all'}).value;
+  const list=inventory.filter(i=>`${i.name} ${i.brand} ${i.model} ${i.projCode} ${i.poNo}`.toLowerCase().includes(q)&&(sf==='all'||i.status===sf)&&(pf==='all'||i.projCode===pf));
+
+  const tot=inventory.length,totCost=inventory.reduce((s,i)=>s+(i.qty*i.unitCost),0);
+  const np=inventory.filter(i=>i.status==='pending').length,no=inventory.filter(i=>i.status==='ordered').length;
+  const npa=inventory.filter(i=>i.status==='partial').length,ni=inventory.filter(i=>i.status==='installed').length;
+  document.getElementById('inv-kpi-row').innerHTML=`
+    <div class="kpi"><div class="kv">${tot}</div><div class="kl">รายการทั้งหมด</div></div>
+    <div class="kpi"><div class="kv" style="color:#f97316">${totCost.toFixed(2)} MB</div><div class="kl">มูลค่ารวม (MB)</div></div>
+    <div class="kpi"><div class="kv" style="color:#94a3b8">${np}</div><div class="kl">📋 รอ PO</div></div>
+    <div class="kpi"><div class="kv" style="color:#3b82f6">${no}</div><div class="kl">🛒 สั่งซื้อแล้ว</div></div>
+    <div class="kpi"><div class="kv" style="color:#eab308">${npa}</div><div class="kl">📦 รับบางส่วน</div></div>
+    <div class="kpi"><div class="kv" style="color:#22c55e">${ni}</div><div class="kl">✅ ติดตั้งแล้ว</div></div>`;
+
+  const stM={pending:{cls:'inv-pending',l:'รอ PO'},ordered:{cls:'inv-ordered',l:'สั่งซื้อแล้ว'},partial:{cls:'inv-partial',l:'รับบางส่วน'},received:{cls:'inv-received',l:'รับครบ'},installed:{cls:'inv-installed',l:'ติดตั้งแล้ว'}};
+  document.getElementById('invitem-tbody').innerHTML=list.map(item=>{
+    const ri=inventory.indexOf(item);
+    const st=stM[item.status]||{cls:'',l:item.status};
+    const rp=item.qty>0?Math.round(item.qtyRec/item.qty*100):0;
+    const ip=item.qty>0?Math.round(item.qtyInst/item.qty*100):0;
+    const etaOvr=item.eta&&item.eta<'2026-04-25'&&item.status==='ordered';
+    return `<tr>
+      <td style="font-size:11px">${item.projCode}</td>
+      <td style="font-size:11px;color:#93c5fd">${item.category}</td>
+      <td style="font-size:12px;font-weight:500">${item.name}</td>
+      <td style="font-size:11px;color:#aaa">${item.brand}</td>
+      <td style="font-size:11px;color:#aaa">${item.model}</td>
+      <td style="text-align:center">${item.qty} ${item.unit}</td>
+      <td style="text-align:center;color:#4ade80">${item.qtyRec}</td>
+      <td style="text-align:center;color:#a78bfa">${item.qtyInst}</td>
+      <td style="text-align:right;color:#f97316">${(item.qty*item.unitCost).toFixed(3)}</td>
+      <td>
+        <div title="รับ ${rp}%"><div class="prog-bar"><div class="prog-fill" style="width:${rp}%;background:#3b82f6"></div></div><span style="font-size:10px;color:#aaa">รับ${rp}%</span></div>
+        <div title="ติดตั้ง ${ip}%"><div class="prog-bar"><div class="prog-fill" style="width:${ip}%"></div></div><span style="font-size:10px;color:#aaa">ติด${ip}%</span></div>
+      </td>
+      <td><span class="inv-status-badge ${st.cls}">${st.l}</span></td>
+      <td style="font-size:11px;color:${etaOvr?'#ef4444':'#888'}">${item.eta||'-'}${etaOvr?' ⚠️':''}</td>
+      <td>
+        <button class="btn bo" style="padding:2px 6px;font-size:10px" onclick="openInvItemMod(${ri})">✏️</button>
+        <button class="btn bo" style="padding:2px 6px;font-size:10px" onclick="delInvItem(${ri})">🗑</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  // populate project filter
+  const pfd=document.getElementById('inv-proj-filter');
+  if(pfd){
+    const cur=pfd.value;
+    pfd.innerHTML='<option value="all">ทุกโปรเจค</option>'+[...new Set(inventory.map(i=>i.projCode))].sort().map(c=>`<option value="${c}">${c}</option>`).join('');
+    pfd.value=cur;
+  }
+
+  // Category chart
+  const cats={};inventory.forEach(i=>{cats[i.category]=(cats[i.category]||0)+(i.qty*i.unitCost);});
+  destroyChart('invCatChart');
+  const ic=document.getElementById('invCatChart');
+  if(ic) charts['invCatChart']=new Chart(ic,{type:'doughnut',data:{labels:Object.keys(cats),datasets:[{data:Object.values(cats).map(v=>+v.toFixed(3)),backgroundColor:['#3b82f6','#22c55e','#f59e0b','#ef4444','#a78bfa','#06b6d4','#f97316','#84cc16','#ec4899'],borderWidth:2,borderColor:'#1a1a2e'}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#ccc',font:{size:10}}}}}});
+}
+
+function openInvItemMod(idx){
+  invEditIdx=idx;
+  const item=idx!==null?inventory[idx]:null;
+  document.getElementById('invitem-modal').style.display='flex';
+  document.getElementById('invitem-mod-title').textContent=item?'✏️ แก้ไขรายการ':'➕ เพิ่ม Material/Equipment';
+  const fs=['ii-proj','ii-cat','ii-name','ii-brand','ii-model','ii-unit','ii-qty','ii-qtyRec','ii-qtyInst','ii-cost','ii-status','ii-po','ii-podate','ii-eta','ii-loc','ii-note'];
+  const vs=item?[item.projCode,item.category,item.name,item.brand,item.model,item.unit,item.qty,item.qtyRec,item.qtyInst,item.unitCost,item.status,item.poNo,item.poDate,item.eta,item.location,item.note]:['BPD005','Equipment','','','','ชิ้น',0,0,0,0,'pending','','','','',''];
+  fs.forEach((f,i)=>{const el=document.getElementById(f);if(el)el.value=vs[i];});
+}
+function closeInvItemMod(){document.getElementById('invitem-modal').style.display='none';invEditIdx=null;}
+function saveInvItem(){
+  const g=id=>document.getElementById(id).value;
+  const item={id:invEditIdx!==null?inventory[invEditIdx].id:'v'+Date.now(),projCode:g('ii-proj'),category:g('ii-cat'),name:g('ii-name'),brand:g('ii-brand'),model:g('ii-model'),unit:g('ii-unit'),qty:+g('ii-qty'),qtyRec:+g('ii-qtyRec'),qtyInst:+g('ii-qtyInst'),unitCost:+g('ii-cost'),status:g('ii-status'),poNo:g('ii-po'),poDate:g('ii-podate'),eta:g('ii-eta'),location:g('ii-loc'),note:g('ii-note')};
+  if(!item.name){showToast('กรุณากรอกชื่อรายการ');return;}
+  if(invEditIdx!==null) inventory[invEditIdx]=item; else inventory.push(item);
+  closeInvItemMod();renderInventory();
+  logAct(`${invEditIdx!==null?'แก้ไข':'เพิ่ม'}: ${item.name} [${item.projCode}]`);
+  showToast(invEditIdx!==null?'✅ แก้ไขแล้ว':'✅ เพิ่มรายการแล้ว');
+}
+function delInvItem(i){if(!confirm(`ลบ "${inventory[i].name}"?`))return;logAct(`ลบ: ${inventory[i].name}`);inventory.splice(i,1);renderInventory();}
+
+// ===== ACTIVITY =====
+function logAct(msg){const now=new Date();const ts=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;actLog.unshift({ts,msg});if(actLog.length>150)actLog.pop();}
+function renderAct(){
+  const aq=(document.getElementById('act-srch')||{value:''}).value.toLowerCase();
+  const filtered=aq?actLog.filter(a=>a.msg.toLowerCase().includes(aq)||a.ts.includes(aq)):actLog;
+  document.getElementById('act-list').innerHTML=filtered.length
+    ?filtered.map(a=>`<div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid #2d2d4e"><span style="font-size:11px;color:#888;white-space:nowrap">${a.ts}</span><span style="font-size:12px">${a.msg}</span></div>`).join('')
+    :'<div style="color:#64748b;padding:16px;font-size:12px">ไม่พบ log ที่ตรงกับการค้นหา</div>';
+}
+
+// ===== MODALS =====
+function openProjMod(idx){
+  editProjIdx=idx;const p=idx!==null?PROJECTS[idx]:null;
+  document.getElementById('proj-modal').style.display='flex';
+  document.getElementById('pm-title').textContent=p?'✏️ แก้ไขโปรเจค':'➕ เพิ่มโปรเจค';
+  ['pm-code','pm-name','pm-cust','pm-pm','pm-bu','pm-cat','pm-val','pm-ww','pm-start','pm-end','pm-prog','pm-st','pm-stat'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    const vs=p?[p.code,p.name,p.customer,p.pm,p.bu,p.cat,p.value,p.ww2026,p.start,p.end,p.progress,p.overallSt,p.status]:['','','','','IND','Lump Sum','','','2026-01','2026-12',0,'G','active'];
+    if(el) el.value=vs[i];
+  });
+}
+function closeProjMod(){document.getElementById('proj-modal').style.display='none';editProjIdx=null;}
+function saveProjMod(){
+  const g=id=>document.getElementById(id).value;
+  const code=g('pm-code').trim();
+  if(!code||!g('pm-name')){showToast('กรุณากรอก Code และชื่อโปรเจค');return;}
+  const sc={'G':'#22c55e','Y':'#eab308','R':'#ef4444'};
+  const proj={code,name:g('pm-name'),customer:g('pm-cust'),pm:g('pm-pm'),bu:g('pm-bu'),cat:g('pm-cat'),value:+g('pm-val'),ww2026:+g('pm-ww'),start:g('pm-start'),end:g('pm-end'),progress:+g('pm-prog'),overallSt:g('pm-st'),status:g('pm-stat'),color:sc[g('pm-st')]||'#22c55e'};
+  if(editProjIdx!==null){PROJECTS[editProjIdx]=proj;}
+  else{PROJECTS.push(proj);finData[code]={months:{},marginEst:20};MONTH_KEYS.forEach(m=>finData[code].months[m]={revForecast:0,revActual:0,costActual:0});}
+  closeProjMod();renderPage(currentPage);
+  logAct(`${editProjIdx!==null?'แก้ไข':'เพิ่ม'}โปรเจค: ${proj.name}`);
+  showToast(editProjIdx!==null?'✅ อัพเดตแล้ว':'✅ เพิ่มโปรเจคแล้ว');
+}
+
+function openMsMod(projIdx){
+  document.getElementById('ms-modal').style.display='flex';
+  document.getElementById('ms-proj-sel').value=PROJECTS[projIdx]?PROJECTS[projIdx].code:PROJECTS[0].code;
+  ['ms-name-inp','ms-due-inp','ms-note-inp'].forEach(id=>{document.getElementById(id).value='';});
+  document.getElementById('ms-done-inp').checked=false;
+}
+function closeMsMod(){document.getElementById('ms-modal').style.display='none';}
+function saveMsMod(){
+  const name=document.getElementById('ms-name-inp').value.trim();
+  if(!name){showToast('กรุณากรอกชื่อ Milestone');return;}
+  milestones.push({id:'m'+Date.now(),projCode:document.getElementById('ms-proj-sel').value,name,due:document.getElementById('ms-due-inp').value,done:document.getElementById('ms-done-inp').checked,note:document.getElementById('ms-note-inp').value});
+  closeMsMod();renderProgress();logAct(`เพิ่ม Milestone: ${name}`);showToast('✅ เพิ่ม Milestone แล้ว');
+}
+
+function openIssMod(projIdx){
+  document.getElementById('iss-modal').style.display='flex';
+  document.getElementById('iss-proj-sel').value=PROJECTS[projIdx]?PROJECTS[projIdx].code:PROJECTS[0].code;
+  ['iss-title-inp','iss-desc-inp'].forEach(id=>{document.getElementById(id).value='';});
+  document.getElementById('iss-type-inp').value='risk';
+  document.getElementById('iss-sev-inp').value='medium';
+}
+function closeIssMod(){document.getElementById('iss-modal').style.display='none';}
+function saveIssMod(){
+  const title=document.getElementById('iss-title-inp').value.trim();
+  if(!title){showToast('กรุณากรอกหัวข้อ');return;}
+  issues.push({id:'s'+Date.now(),projCode:document.getElementById('iss-proj-sel').value,type:document.getElementById('iss-type-inp').value,title,desc:document.getElementById('iss-desc-inp').value,severity:document.getElementById('iss-sev-inp').value,status:'open',date:new Date().toISOString().split('T')[0]});
+  closeIssMod();renderProgress();logAct(`เพิ่ม Issue: ${title}`);showToast('✅ บันทึกแล้ว');
+}
+
+function openInvMod(idx){
+  editInvIdx=idx;const inv=idx!==null&&idx!==undefined?invoices[idx]:null;
+  document.getElementById('inv-modal').style.display='flex';
+  document.getElementById('invmod-title').textContent=inv?'✏️ แก้ไข Invoice':'🧾 เพิ่ม Invoice';
+  document.getElementById('iv-proj').innerHTML=PROJECTS.map(p=>`<option value="${p.code}" ${inv&&inv.projCode===p.code?'selected':''}>${p.code} — ${p.name}</option>`).join('');
+  ['iv-no','iv-amt','iv-date','iv-due','iv-paid','iv-pdate','iv-stat','iv-note'].forEach((id,i)=>{
+    const el=document.getElementById(id);const vs=inv?[inv.invNo,inv.amount,inv.date,inv.due,inv.paid,inv.pdate,inv.status,inv.note]:['','','','',0,'','pending',''];
+    if(el) el.value=vs[i];
+  });
+}
+function closeInvMod(){document.getElementById('inv-modal').style.display='none';editInvIdx=null;}
+function saveInv(){
+  const g=id=>document.getElementById(id).value;
+  if(!g('iv-no').trim()){showToast('กรุณากรอกเลขที่ Invoice');return;}
+  const item={id:editInvIdx!==null&&editInvIdx!==undefined?invoices[editInvIdx].id:'i'+Date.now(),projCode:g('iv-proj'),invNo:g('iv-no'),amount:+g('iv-amt'),paid:+g('iv-paid'),date:g('iv-date'),due:g('iv-due'),pdate:g('iv-pdate'),status:g('iv-stat'),note:g('iv-note')};
+  if(editInvIdx!==null&&editInvIdx!==undefined) invoices[editInvIdx]=item; else invoices.push(item);
+  closeInvMod();renderInvoicePage();logAct(`${editInvIdx!==null&&editInvIdx!==undefined?'แก้ไข':'เพิ่ม'} Invoice: ${item.invNo}`);showToast('✅ บันทึกแล้ว');
+}
+
+function openDet(type,idx){
+  if(type==='proj'){
+    const p=PROJECTS[idx];
+    const pms=milestones.filter(m=>m.projCode===p.code);
+    const pis=issues.filter(s=>s.projCode===p.code);
+    document.getElementById('dp-title').textContent=`${p.code}: ${p.name}`;
+    document.getElementById('dp-body').innerHTML=`
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+        ${[['ลูกค้า',p.customer],['PM',p.pm],['Service',p.svc||'-'],['Category',p.cat||'-'],['PV',p.value.toLocaleString()+' MB'],['WW2026',p.ww2026.toFixed(1)+' MB'],['Bottom Up',(p.bottomup||0).toFixed(1)+' MB'],['Stretch',(p.stretch||0).toFixed(1)+' MB']].map(([l,v])=>`<div><div style="font-size:10px;color:#888">${l}</div><div style="font-size:12px">${v}</div></div>`).join('')}
+      </div>
+      <div style="margin-bottom:12px"><div style="font-size:11px;color:#888;margin-bottom:4px">% Complete</div><div class="prog-bar" style="width:100%;display:block;height:10px"><div class="prog-fill" style="width:${p.progress}%"></div></div><span style="font-size:11px">${p.progress}%</span></div>
+      ${p.progressText?`<div style="margin-bottom:10px;padding:8px;background:#12122a;border-radius:6px;border-left:3px solid #3b82f6"><div style="font-size:10px;color:#93c5fd;font-weight:700;margin-bottom:4px">📋 MoM Update (7 Apr 2026)</div><div style="font-size:11px;color:#cbd5e1;line-height:1.5">${p.progressText}</div></div>`:''}
+      ${p.issuesText?`<div style="margin-bottom:10px;padding:8px;background:#12122a;border-radius:6px;border-left:3px solid #f59e0b"><div style="font-size:10px;color:#fbbf24;font-weight:700;margin-bottom:4px">⚠️ Issues/Actions</div><div style="font-size:11px;color:#cbd5e1;line-height:1.5">${p.issuesText}</div></div>`:''}
+      <div style="font-size:11px;font-weight:700;color:#93c5fd;margin-bottom:4px">Milestones (${pms.length})</div>
+      ${pms.map(m=>`<div style="font-size:11px;padding:3px 0;border-bottom:1px solid #2d2d4e">${m.done?'✅':'⬜'} ${m.name} <span style="color:#888">${m.due}</span></div>`).join('')||'<div style="font-size:11px;color:#666">ไม่มี</div>'}
+      <div style="font-size:11px;font-weight:700;color:#f87171;margin:8px 0 4px">Issues & Risks (${pis.length})</div>
+      ${pis.map(s=>`<div style="font-size:11px;padding:3px 0;border-bottom:1px solid #2d2d4e"><span style="color:${s.severity==='high'?'#ef4444':s.severity==='medium'?'#f59e0b':'#22c55e'}">[${s.severity}]</span> ${s.title} <span style="font-size:10px;color:#888">${s.status}</span></div>`).join('')||'<div style="font-size:11px;color:#666">ไม่มี</div>'}`;
+  }
+  document.getElementById('detpanel').classList.add('dpo');
+}
+function closeDet(){document.getElementById('detpanel').classList.remove('dpo');}
+
+// ===== TOAST =====
+function showToast(msg){
+  document.getElementById('tmsg').textContent=msg;
+  const t=document.getElementById('toast');t.classList.add('tshow');
+  setTimeout(()=>t.classList.remove('tshow'),2500);
+}
+
+
+
+// ===== PROJECT 360 ANALYSIS =====
+function buildAnalysis(p, fd, pInvs, pItems, pMs, pIs, totR, totC, totF, totInv, totPaid){
+  var flags = [];
+
+  // Helper
+  function flag(level, icon, title, detail, tip){
+    flags.push({level:level, icon:icon, title:title, detail:detail, tip:tip||''});
+  }
+
+  var prog = p.progress || 0;
+  var ww   = p.ww2026   || 0;
+  var pv   = p.value    || 0;
+
+  // --- 1. Payment vs Progress gap ---
+  if(totPaid > 0 && prog >= 0){
+    var payPct = pv > 0 ? (totPaid/pv*100) : 0;
+    var gap    = payPct - prog;
+    if(gap > 30){
+      flag('red','💸','จ่ายเงินเกินหน้างานมาก',
+        'ความคืบหน้า '+prog+'% แต่จ่ายไปแล้ว '+payPct.toFixed(1)+'% ของ PV (ห่าง '+gap.toFixed(0)+'%)',
+        'ตรวจสอบงวดงานและ S-Curve ว่าสอดคล้องกัน');
+    } else if(gap > 15){
+      flag('yellow','⚠️','จ่ายเงินนำหน้างาน',
+        'ความคืบหน้า '+prog+'% แต่จ่ายไปแล้ว '+payPct.toFixed(1)+'% (ห่าง '+gap.toFixed(0)+'%)',
+        'ติดตาม S-Curve และ milestone ให้สอดคล้อง');
+    }
+  }
+
+  // --- 2. Revenue vs Progress ---
+  if(ww > 0 && prog >= 0){
+    var revPct = (totR / ww * 100);
+    var gap2   = prog - revPct;
+    if(prog > 20 && revPct < 5){
+      flag('red','📉','งานคืบหน้าแต่ยังไม่รับรู้รายได้',
+        'งานทำไปแล้ว '+prog+'% แต่ Actual Revenue เพียง '+totR.toFixed(1)+' MB ('+revPct.toFixed(1)+'% ของ WW)',
+        'ตรวจสอบเงื่อนไขการ booking revenue และ invoice ที่ค้างอยู่');
+    } else if(gap2 > 25){
+      flag('yellow','📊','Revenue booking ช้ากว่าความคืบหน้า',
+        'งาน '+prog+'% แต่ Revenue booking '+revPct.toFixed(1)+'% (ห่าง '+gap2.toFixed(0)+'%)',
+        'พิจารณา accelerate การวางบิลตามงวดงาน');
+    }
+  }
+
+  // --- 3. Cost overrun risk ---
+  if(totR > 0 && totC > 0){
+    var marginPct = (totR - totC) / totR * 100;
+    if(marginPct < 0){
+      flag('red','🔴','Margin ติดลบ — ขาดทุน',
+        'Revenue '+totR.toFixed(1)+' MB, Cost '+totC.toFixed(1)+' MB → Margin '+marginPct.toFixed(1)+'%',
+        'ทบทวน cost structure และ change order ทันที');
+    } else if(marginPct < 10){
+      flag('yellow','⚠️','Margin ต่ำกว่าเป้า',
+        'Actual Margin '+marginPct.toFixed(1)+'% (เป้า ≥15%)',
+        'ตรวจสอบ cost overrun และ variation order');
+    }
+  }
+
+  // --- 4. Invoice collection risk ---
+  if(totInv > 0){
+    var uncollected = totInv - totPaid;
+    var uncollPct   = uncollected / totInv * 100;
+    var overdue     = pInvs.filter(function(iv){ return iv.status === 'overdue'; });
+    if(overdue.length > 0){
+      var overdueAmt = overdue.reduce(function(s,iv){ return s + (iv.amount - iv.paid); }, 0);
+      flag('red','🚨','มี Invoice เกินกำหนดชำระ',
+        overdue.length+' รายการ ยอดค้าง '+overdueAmt.toFixed(2)+' MB',
+        'ติดตามลูกค้าและพิจารณา escalate');
+    } else if(uncollPct > 50 && totInv > 5){
+      flag('yellow','💳','ยอด AR สูง — เก็บเงินได้น้อย',
+        'วางบิลรวม '+totInv.toFixed(1)+' MB เก็บแล้ว '+totPaid.toFixed(1)+' MB ('+( 100-uncollPct).toFixed(0)+'%)',
+        'เร่งติดตามการชำระเงิน');
+    }
+  }
+
+  // --- 5. Milestone vs Progress ---
+  if(pMs.length > 0){
+    var msDone    = pMs.filter(function(m){ return m.done; }).length;
+    var msPct     = msDone / pMs.length * 100;
+    var progMsGap = prog - msPct;
+    if(prog > 50 && msPct < 30){
+      flag('yellow','🏁','Milestone ล้าหลังความคืบหน้า',
+        'งาน '+prog+'% แต่ผ่าน Milestone เพียง '+msDone+'/'+pMs.length+' ('+msPct.toFixed(0)+'%)',
+        'Update milestone ให้สะท้อนสถานะจริง');
+    }
+  }
+
+  // --- 6. Inventory vs Progress ---
+  if(pItems.length > 0){
+    var notReceived = pItems.filter(function(iv){
+      return iv.status === 'pending' || iv.status === 'ordered';
+    });
+    if(prog > 30 && notReceived.length > 0 && notReceived.length >= pItems.length * 0.5){
+      flag('yellow','📦','วัสดุ/อุปกรณ์ยังไม่ได้รับ',
+        notReceived.length+' รายการจาก '+pItems.length+' ยังไม่รับของ ขณะที่งาน '+prog+'% แล้ว',
+        'ตรวจสอบ delivery schedule และ PO status');
+    }
+  }
+
+  // --- 7. No issues but high progress ---
+  if(prog > 60 && pIs.length === 0 && pMs.length === 0){
+    flag('blue','ℹ️','ยังไม่มีข้อมูล Issues/Milestones',
+      'งานคืบหน้า '+prog+'% แต่ยังไม่ได้บันทึก Milestone และ Issues',
+      'เพิ่มข้อมูลเพื่อให้ tracking ครบถ้วน');
+  }
+
+  // --- 8. Forecast vs Actual Revenue trend ---
+  if(totF > 0 && totR < totF * 0.3 && prog > 25){
+    flag('yellow','📈','Revenue Actual ต่ำกว่า Forecast มาก',
+      'Forecast '+totF.toFixed(1)+' MB แต่ Actual เพียง '+totR.toFixed(1)+' MB ('+( totR/totF*100).toFixed(0)+'%)',
+      'ทบทวน revenue recognition plan และ billing schedule');
+  }
+
+  // --- Build HTML ---
+  if(flags.length === 0){
+    return '<div style="display:flex;align-items:center;gap:10px">'+
+      '<span style="font-size:20px">✅</span>'+
+      '<div><div style="font-size:13px;font-weight:700;color:#22c55e">ไม่พบความเสี่ยงที่น่ากังวล</div>'+
+      '<div style="font-size:11px;color:#64748b;margin-top:2px">ข้อมูลทุก Module อยู่ในเกณฑ์ปกติ</div></div></div>';
+  }
+
+  var lvlColor = {red:'#ef4444', yellow:'#f59e0b', blue:'#3b82f6'};
+  var lvlBg    = {red:'#ef444420', yellow:'#f59e0b20', blue:'#3b82f620'};
+  var html2    = '<div style="margin-bottom:8px;font-size:12px;font-weight:700;color:#fbbf24">'+
+    '🔍 พบ '+flags.length+' ประเด็นที่ควรตรวจสอบ</div>'+
+    '<div style="display:grid;gap:8px">';
+  flags.forEach(function(f){
+    var c  = lvlColor[f.level] || '#64748b';
+    var bg = lvlBg[f.level]   || '#64748b20';
+    html2 +=
+      '<div style="background:'+bg+';border:1px solid '+c+'44;border-radius:8px;padding:10px 14px;display:flex;gap:12px;align-items:flex-start">'+
+        '<span style="font-size:20px;flex-shrink:0">'+f.icon+'</span>'+
+        '<div style="flex:1">'+
+          '<div style="font-size:12px;font-weight:700;color:'+c+'">'+f.title+'</div>'+
+          '<div style="font-size:11px;color:#cbd5e1;margin-top:3px">'+f.detail+'</div>'+
+          (f.tip?'<div style="font-size:10px;color:#94a3b8;margin-top:4px;font-style:italic">💡 '+f.tip+'</div>':'')+
+        '</div>'+
+        '<span style="font-size:10px;padding:2px 8px;border-radius:10px;background:'+c+'33;color:'+c+';font-weight:700;white-space:nowrap;align-self:center">'+
+          (f.level==='red'?'HIGH':f.level==='yellow'?'MED':'INFO')+
+        '</span>'+
+      '</div>';
+  });
+  html2 += '</div>';
+  return html2;
+}
+
+// ===== PROJECT 360 VIEW =====
+let v360Chart=null;
+
+function goto360(code){
+  // Set dropdown value BEFORE nav so renderPage->render360 sees it
+  var sel=document.getElementById('v360-sel');
+  if(sel) sel.value=code;
+  nav('view360');
+}
+
+function filter360Sel(){
+  var q=(document.getElementById('v360-srch')||{value:''}).value.toLowerCase();
+  var sel=document.getElementById('v360-sel');
+  if(!sel)return;
+  var cur=sel.value;
+  var opts='<option value="">— เลือกโปรเจค —</option>';
+  PROJECTS.forEach(function(p){
+    if((p.code+' '+p.name+' '+p.customer).toLowerCase().indexOf(q)>=0){
+      opts+='<option value="'+p.code+'">'+p.code+' — '+p.name+'</option>';
+    }
+  });
+  sel.innerHTML=opts;
+  if(cur) sel.value=cur;
+}
+
+function render360(){
+  /* ---- resolve project ---- */
+  var selEl = document.getElementById('v360-sel');
+  var code  = selEl ? selEl.value : '';
+  // auto-pick first project if nothing chosen yet
+  if (!code && selEl && selEl.options && selEl.options.length > 1){
+    selEl.selectedIndex = 1;
+    code = selEl.value;
+  }
+  var ph  = document.getElementById('v360-placeholder');
+  var box = document.getElementById('v360-content');
+  var p   = null;
+  for (var pi = 0; pi < PROJECTS.length; pi++){
+    if (PROJECTS[pi].code === code){ p = PROJECTS[pi]; break; }
+  }
+  if (!p){
+    if (ph)  ph.style.display  = '';
+    if (box) box.style.display = 'none';
+    return;
+  }
+  if (ph)  ph.style.display  = 'none';
+  if (box) box.style.display = 'block';
+
+  /* ---- helpers ---- */
+  function tx(id, v){ var el=document.getElementById(id); if(el) el.textContent = v; }
+  function hx(id, v){ var el=document.getElementById(id); if(el) el.innerHTML   = v; }
+
+  /* ---- banner ---- */
+  var stLabel = p.overallSt==='R' ? '🔴 Red' : p.overallSt==='Y' ? '🟡 Yellow' : '🟢 Green';
+  var banner  = document.getElementById('v360-banner');
+  if (banner) banner.style.borderLeftColor = p.svcColor || '#3b82f6';
+  tx('v360-code', p.code);
+  tx('v360-name', p.name);
+  tx('v360-meta', 'ลูกค้า: '+p.customer+'  |  PM: '+p.pm+'  |  Category: '+(p.cat||'-')+'  |  Focus: '+(p.focus||'-'));
+  tx('v360-st-badge', stLabel);
+  var sb = document.getElementById('v360-svc-badge');
+  if (sb){
+    sb.textContent        = p.svc || '-';
+    sb.style.background   = (p.svcColor||'#3b82f6') + '33';
+    sb.style.color        = p.svcColor || '#e2e8f0';
+  }
+
+  /* ---- aggregate financials ---- */
+  var fd = finData[p.code] || {months:{}};
+  var totF=0, totR=0, totC=0;
+  MONTH_KEYS.forEach(function(m){
+    var d = fd.months[m] || {};
+    totF += d.revForecast  || 0;
+    totR += d.revActual    || 0;
+    totC += d.costActual   || 0;
+  });
+  var margin = totR > 0 ? ((totR-totC)/totR*100).toFixed(1) : '-';
+
+  var pInvs    = invoices.filter(function(iv){ return iv.projCode === p.code; });
+  var totInv   = pInvs.reduce(function(s,iv){ return s+iv.amount; }, 0);
+  var totPaid  = pInvs.reduce(function(s,iv){ return s+iv.paid;   }, 0);
+  var pItems   = inventory.filter(function(iv){ return iv.projCode === p.code; });
+  var pMs      = milestones.filter(function(m){ return m.projCode === p.code; });
+  var pIs      = issues.filter(function(x){ return x.projCode === p.code; });
+  var msDone   = pMs.filter(function(m){ return m.done; }).length;
+
+  /* ---- KPIs ---- */
+  var kd = [
+    { v: p.value.toLocaleString()+' MB', l: 'Project Value (PV)' },
+    { v: p.ww2026.toFixed(1)+' MB',      l: 'WW2026 Target' },
+    { v: p.progress+'%',                 l: '% Complete' },
+    { v: totR.toFixed(1)+' MB',          l: 'Actual Revenue YTD' },
+    { v: margin==='-' ? '-' : margin+'%',l: 'Actual Margin%' },
+    { v: totPaid.toFixed(1)+'/'+totInv.toFixed(1), l: 'Collected/Invoiced (MB)' },
+    { v: pItems.length+' รายการ',        l: 'Inventory Items' },
+    { v: msDone+'/'+pMs.length,          l: 'Milestones Done' },
+  ];
+  /* analysis - all vars now declared */
+  var anaEl = document.getElementById('v360-analysis');
+  if(anaEl) anaEl.innerHTML = buildAnalysis(p, fd, pInvs, pItems, pMs, pIs, totR, totC, totF, totInv, totPaid);
+  hx('v360-kpis', kd.map(function(k){
+    return '<div class="kpi"><div class="kv">'+k.v+'</div><div class="kl">'+k.l+'</div></div>';
+  }).join(''));
+
+  /* ---- info table ---- */
+  var rows = [
+    ['รหัสโปรเจค', p.code],
+    ['ชื่อโปรเจค', p.name],
+    ['ลูกค้า',     p.customer],
+    ['PM',         p.pm],
+    ['Service Type','<span style="color:'+(p.svcColor||'#e2e8f0')+'">'+(p.svc||'-')+'</span>'],
+    ['Category',   p.cat||'-'],
+    ['Project Value', p.value.toLocaleString()+' MB'],
+    ['WW2026',     p.ww2026.toFixed(1)+' MB'],
+    ['Bottom Up',  (p.bottomup||0).toFixed(1)+' MB'],
+    ['Stretch',    (p.stretch||0).toFixed(1)+' MB'],
+    ['Focus',      p.focus||'-'],
+    ['Overall Status', stLabel],
+  ];
+  hx('v360-info',
+    '<table style="width:100%;font-size:12px"><tbody>' +
+    rows.map(function(r){
+      return '<tr>'+
+        '<td style="color:#64748b;width:38%;padding:5px 0;border-bottom:1px solid #2d2d4e">'+r[0]+'</td>'+
+        '<td style="padding:5px 0;border-bottom:1px solid #2d2d4e">'+r[1]+'</td>'+
+        '</tr>';
+    }).join('') +
+    '</tbody></table>'
+  );
+
+  /* ---- progress & MoM ---- */
+  var stC = p.overallSt==='R' ? '#ef4444' : p.overallSt==='Y' ? '#f59e0b' : '#22c55e';
+  var ph2 =
+    '<div style="margin-bottom:10px">'+
+      '<div style="display:flex;justify-content:space-between;margin-bottom:4px">'+
+        '<span style="font-size:11px;color:#94a3b8">% Complete</span>'+
+        '<span style="font-size:14px;font-weight:800;color:'+stC+'">'+p.progress+'%</span>'+
+      '</div>'+
+      '<div style="background:#1e1e3f;border-radius:6px;height:12px;overflow:hidden">'+
+        '<div style="height:12px;width:'+p.progress+'%;background:'+stC+';border-radius:6px;transition:.4s"></div>'+
+      '</div>'+
+    '</div>';
+  if (p.progressText){
+    ph2 +=
+      '<div style="margin-bottom:10px;padding:8px;background:#12122a;border-radius:6px;border-left:3px solid #3b82f6">'+
+        '<div style="font-size:10px;color:#93c5fd;font-weight:700;margin-bottom:4px">📋 MoM Update (7 Apr 2026)</div>'+
+        '<div style="font-size:11px;color:#cbd5e1;line-height:1.6">'+p.progressText+'</div>'+
+      '</div>';
+  } else {
+    ph2 += '<div style="font-size:11px;color:#475569;padding:8px">ยังไม่มี MoM Update</div>';
+  }
+  if (p.issuesText){
+    ph2 +=
+      '<div style="padding:8px;background:#12122a;border-radius:6px;border-left:3px solid #f59e0b">'+
+        '<div style="font-size:10px;color:#fbbf24;font-weight:700;margin-bottom:4px">⚠️ Issues/Actions</div>'+
+        '<div style="font-size:11px;color:#cbd5e1;line-height:1.6">'+p.issuesText+'</div>'+
+      '</div>';
+  }
+  hx('v360-progress', ph2);
+  /* ---- financial chart ---- */
+  try { if (v360Chart){ v360Chart.destroy(); v360Chart = null; } } catch(e){}
+  try {
+  var ctx = document.getElementById('v360-fin-chart');
+  if (ctx){
+    v360Chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: MONTH_LABELS,
+        datasets: [
+          { label:'Forecast', data: MONTH_KEYS.map(function(m){ return (fd.months[m]||{}).revForecast||0; }),
+            backgroundColor:'#3b82f640', borderColor:'#3b82f6', borderWidth:1 },
+          { label:'Act Rev',  data: MONTH_KEYS.map(function(m){ return (fd.months[m]||{}).revActual||0;   }),
+            backgroundColor:'#22c55e80', borderColor:'#22c55e', borderWidth:1 },
+          { label:'Act Cost', data: MONTH_KEYS.map(function(m){ return (fd.months[m]||{}).costActual||0;  }),
+            backgroundColor:'#ef444480', borderColor:'#ef4444', borderWidth:1 },
+        ]
+      },
+      options:{
+        responsive:true,
+        plugins:{ legend:{ labels:{ color:'#94a3b8', font:{size:11} } } },
+        scales:{
+          x:{ ticks:{color:'#64748b'}, grid:{color:'#2d2d4e'} },
+          y:{ ticks:{color:'#64748b'}, grid:{color:'#2d2d4e'} }
+        }
+      }
+    });
+  }
+  } catch(chartErr){}
+
+  /* ---- financial table ---- */
+  var finRows = '';
+  MONTH_KEYS.forEach(function(m, i){
+    var d  = fd.months[m] || {};
+    var fr = d.revForecast||0, ar = d.revActual||0, ac = d.costActual||0;
+    if (fr===0 && ar===0 && ac===0) return;
+    var mg  = ar > 0 ? ((ar-ac)/ar*100).toFixed(1) : '-';
+    var mgC = mg!=='-' ? (+mg>=15 ? '#22c55e' : +mg>=0 ? '#f59e0b' : '#ef4444') : '#94a3b8';
+    finRows +=
+      '<tr>'+
+        '<td>'+MONTH_LABELS[i]+'</td>'+
+        '<td style="text-align:right">'+fr.toFixed(2)+'</td>'+
+        '<td style="text-align:right;color:#22c55e">'+ar.toFixed(2)+'</td>'+
+        '<td style="text-align:right;color:#ef4444">'+ac.toFixed(2)+'</td>'+
+        '<td style="text-align:right;color:'+mgC+'">'+(mg!=='-'?mg+'%':'-')+'</td>'+
+      '</tr>';
+  });
+  hx('v360-fin-tbody', finRows ||
+    '<tr><td colspan="5" style="text-align:center;color:#475569;padding:12px">ยังไม่มีข้อมูล Financial</td></tr>');
+
+  /* ---- milestones ---- */
+  var msH = '';
+  pMs.forEach(function(m){
+    msH +=
+      '<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #1e1e3f">'+
+        '<span style="font-size:16px;cursor:pointer" onclick="toggleMs360(\''+m.id+'\')">'+
+          (m.done ? '✅' : '⬜')+
+        '</span>'+
+        '<div style="flex:1">'+
+          '<div style="font-size:12px;'+(m.done?'color:#64748b;text-decoration:line-through':'color:#e2e8f0')+'">'+m.name+'</div>'+
+          '<div style="font-size:10px;color:#64748b">Due: '+m.due+'</div>'+
+        '</div>'+
+        '<span style="font-size:10px;padding:2px 6px;border-radius:8px;background:'+(m.done?'#16a34a33':'#1e3a5f')+
+          ';color:'+(m.done?'#22c55e':'#93c5fd')+'">'+(m.done?'Done':'Pending')+'</span>'+
+      '</div>';
+  });
+  hx('v360-milestones', msH || '<div style="color:#475569;padding:12px;font-size:11px">ยังไม่มี Milestone</div>');
+
+  /* ---- issues ---- */
+  var scMap = { high:'#ef4444', medium:'#f59e0b', low:'#22c55e' };
+  var isH = '';
+  pIs.forEach(function(x){
+    var sc = scMap[x.severity] || '#64748b';
+    isH +=
+      '<div style="padding:6px 0;border-bottom:1px solid #1e1e3f">'+
+        '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">'+
+          '<span style="font-size:10px;padding:1px 6px;border-radius:8px;background:'+sc+'22;color:'+sc+';font-weight:700">'+
+            (x.severity||'').toUpperCase()+
+          '</span>'+
+          '<span style="font-size:12px;color:#e2e8f0">'+x.title+'</span>'+
+        '</div>'+
+        '<div style="font-size:11px;color:#64748b;margin-left:4px">'+(x.desc||'')+
+          ' <span style="color:#94a3b8">['+x.status+']</span></div>'+
+      '</div>';
+  });
+  hx('v360-issues', isH || '<div style="color:#475569;padding:12px;font-size:11px">ไม่มี Issues/Risks</div>');
+
+  /* ---- inventory ---- */
+  var stCl = { pending:'#64748b', ordered:'#3b82f6', partial:'#f59e0b', received:'#22c55e', installed:'#10b981' };
+  var stTH = { pending:'รอ PO', ordered:'สั่งซื้อแล้ว', partial:'รับบางส่วน', received:'รับครบ', installed:'ติดตั้งแล้ว' };
+  var ivH = '';
+  pItems.forEach(function(iv){
+    var c = stCl[iv.status] || '#64748b';
+    ivH +=
+      '<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #1e1e3f">'+
+        '<div style="flex:1">'+
+          '<div style="font-size:12px;color:#e2e8f0">'+iv.name+'</div>'+
+          '<div style="font-size:10px;color:#64748b">'+(iv.category||'-')+
+            ' | '+(iv.qtyReceived||0)+'/'+(iv.qty||0)+' '+(iv.unit||'ชิ้น')+'</div>'+
+        '</div>'+
+        '<span style="font-size:10px;padding:2px 7px;border-radius:8px;background:'+c+'22;color:'+c+'">'+
+          (stTH[iv.status]||iv.status)+
+        '</span>'+
+      '</div>';
+  });
+  hx('v360-inventory', ivH || '<div style="color:#475569;padding:12px;font-size:11px">ยังไม่มีรายการ Inventory</div>');
+
+  /* ---- invoices ---- */
+  var stIC = { pending:'#64748b', partial:'#f59e0b', collected:'#22c55e', overdue:'#ef4444' };
+  var stIT = { pending:'รอเก็บ', partial:'บางส่วน', collected:'ครบแล้ว', overdue:'เกินกำหนด' };
+  var invH = '';
+  pInvs.forEach(function(iv){
+    var c = stIC[iv.status] || '#64748b';
+    invH +=
+      '<tr>'+
+        '<td style="font-size:11px">'+iv.invNo+'</td>'+
+        '<td style="text-align:right">'+iv.amount.toFixed(2)+'</td>'+
+        '<td style="text-align:right;color:#22c55e">'+iv.paid.toFixed(2)+'</td>'+
+        '<td><span style="font-size:10px;padding:2px 7px;border-radius:8px;background:'+c+'22;color:'+c+'">'+
+          (stIT[iv.status]||iv.status)+'</span></td>'+
+        '<td style="font-size:11px;color:#94a3b8">'+(iv.due||'-')+'</td>'+
+      '</tr>';
+  });
+  hx('v360-inv-tbody', invH ||
+    '<tr><td colspan="5" style="text-align:center;color:#475569;padding:12px;font-size:11px">ยังไม่มี Invoice</td></tr>');
+  hx('v360-inv-summary', pInvs.length ?
+    'รวม '+pInvs.length+' Invoice | ยอดรวม: <b style="color:#93c5fd">'+totInv.toFixed(2)+' MB</b>'+
+    ' | เก็บแล้ว: <b style="color:#22c55e">'+totPaid.toFixed(2)+' MB</b>'+
+    ' | คงค้าง: <b style="color:#f59e0b">'+(totInv-totPaid).toFixed(2)+' MB</b>' : '');
+}
+
+function toggleMs360(id){
+  var m=null;
+  for(var i=0;i<milestones.length;i++){if(milestones[i].id===id){m=milestones[i];break;}}
+  if(m){m.done=!m.done;render360();logAct((m.done?'ทำเสร็จ':'ยกเลิก')+' Milestone: '+m.name);}
+}
+
+
+function open360MsMod(){
+  var code=(document.getElementById('v360-sel')||{value:''}).value;
+  var idx=code?PROJECTS.findIndex(function(p){return p.code===code;}):0;
+  openMsMod(idx<0?0:idx);
+}
+function open360IssMod(){
+  var code=(document.getElementById('v360-sel')||{value:''}).value;
+  var idx=code?PROJECTS.findIndex(function(p){return p.code===code;}):0;
+  openIssMod(idx<0?0:idx);
+}
+
+// ===== CLEAR FILTERS =====
+function clearProjFilters(){
+  ['srch','stFilter','svcFilter','catFilter','custFilter'].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.value=el.tagName==='INPUT'?'':'all';
+  });
+  renderProjects();
+}
+function clearFinFilters(){
+  ['fin-srch','finProjFilter','fin-svc'].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.value=el.tagName==='INPUT'?'':'all';
+  });
+  renderFinTable();
+}
+function clearInvFilters(){
+  ['inv-srch','inv-proj-sel','invFilter'].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.value=el.tagName==='INPUT'?'':'all';
+  });
+  renderInvTable();
+}
+
+// ===== INIT =====
+function init(){
+  document.getElementById('topbar-date').textContent=new Date().toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'});
+
+  ['ms-proj-sel','iss-proj-sel','ii-proj'].forEach(function(sid){
+    var el=document.getElementById(sid);
+    if(el) el.innerHTML=PROJECTS.map(function(p){return '<option value="'+p.code+'">'+p.code+' \u2014 '+p.name+'</option>';}).join('');
+  });
+
+  var ff=document.getElementById('finProjFilter');
+  if(ff) ff.innerHTML='<option value="all">ทุกโปรเจค</option>'+PROJECTS.map(function(p){return '<option value="'+p.code+'">'+p.code+' \u2014 '+p.name.substring(0,30)+'</option>';}).join('');
+
+  var custs=[...new Set(PROJECTS.map(function(p){return p.customer;}))].sort();
+  var cf=document.getElementById('custFilter');
+  if(cf) cf.innerHTML='<option value="all">ทุกลูกค้า</option>'+custs.map(function(c){return '<option value="'+c+'">'+c+'</option>';}).join('');
+
+  var ipf=document.getElementById('inv-proj-sel');
+  if(ipf) ipf.innerHTML='<option value="all">ทุกโปรเจค</option>'+PROJECTS.map(function(p){return '<option value="'+p.code+'">'+p.code+'</option>';}).join('');
+
+  var cpf=document.getElementById('cf-proj');
+  if(cpf) cpf.innerHTML='<option value="all">ทุกโปรเจค</option>'+PROJECTS.map(function(p){return '<option value="'+p.code+'">'+p.code+' \u2014 '+p.name.substring(0,25)+'</option>';}).join('');
+
+  var v360=document.getElementById('v360-sel');
+  if(v360) v360.innerHTML='<option value="">\u2014 \u0e40\u0e25\u0e37\u0e2d\u0e01\u0e42\u0e1b\u0e23\u0e40\u0e08\u0e04 \u2014</option>'+PROJECTS.map(function(p){return '<option value="'+p.code+'">'+p.code+' \u2014 '+p.name+'</option>';}).join('');
+
+  nav('dashboard');
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
